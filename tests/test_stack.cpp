@@ -1,15 +1,14 @@
 #include <gtest.h>
-<<<<<<< HEAD
-#include "C:\Michail_Romanov\3823B1PR4\lib_stack\Stack.h"
+
+#include "E:\PROJECTS\3823B1PR4\lib_stack\Stack.h"
 TEST(TStackTest, StackIsEmpty) {
     TStack<int> stack(5); 
     EXPECT_TRUE(stack.isEmpty());  
      
 }
 
-TEST(TStackTest, IsFull) {
-=======
-#include "../lib_stack/stack.h"
+
+
 TEST(TStackTest, ConstructorTest) {
     TStack<int> stack(5); 
     EXPECT_TRUE(stack.isEmpty());  
@@ -17,7 +16,7 @@ TEST(TStackTest, ConstructorTest) {
 }
 
 TEST(TStackTest, PushTest) {
->>>>>>> c85c33f3385ee486d4548e0015fdc7fba9ae565f
+
     TStack<int> stack(3);  
     stack.push(10);
     EXPECT_FALSE(stack.isEmpty());  
@@ -30,7 +29,7 @@ TEST(TStackTest, PushTest) {
  
     EXPECT_THROW(stack.push(40), std::overflow_error);
 }
-<<<<<<< HEAD
+
 //Заливаем два элемента, смотрим последний элемент
 TEST(TStackTest, PushAndTopTest) {
     TStack<int> stack(3);
@@ -58,8 +57,7 @@ TEST(TStackTest, PopTest) {
 
 
 }
-=======
->>>>>>> c85c33f3385ee486d4548e0015fdc7fba9ae565f
+
 
 
 

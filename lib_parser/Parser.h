@@ -2,4 +2,4 @@
 #include<iostream>
 #include<string>
 
-bool IsCorrect(std::string exp);
+bool correct_expression(std::string exp);
