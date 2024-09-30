@@ -2,6 +2,8 @@
 #include <iostream>  
 #include <stdexcept>
 #pragma once
+
+
 template<class T>
 class TQueue {
 public:
@@ -20,7 +22,7 @@ private:
 };
 
 template<class T>
-TQueue<T>::TQueue(size_t size) : _size(size), _front(0), _back(0), _count(0) {
+TQueue<T>::TQueue(size_t size) : _size(size), _front(-1), _back(-1), _count(0) {
     _data = new T[size];
 }
 
@@ -42,9 +44,14 @@ void TQueue<T>::push(T val) {
     if (_count == _size) {
         throw std::overflow_error("Queue overflow");
     }
-    _data[_back] = val;
+    if (isEmpty()) {
+        _front = 0;
+    }
     _back = (_back + 1) % _size;
+    
+    _data[_back] = val;
     ++_count;
+    
 }
 
 template<class T>
@@ -58,8 +65,8 @@ size_t TQueue<T>::top() const {
 template<class T>
 void TQueue<T>::pop() {
     if (isEmpty()) {
-        throw std::logic_error("Queue logic");
+        throw std::logic_error("Queue is empty");
     }
-    _front = (_front + 1) % _size;
+    _front = (_front + 1)% _size;
     --_count;
 }

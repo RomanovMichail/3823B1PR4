@@ -1,6 +1,6 @@
 #include <gtest.h>
 
-#include "E:\PROJECTS\3823B1PR4\lib_stack\Stack.h"
+#include "C:\Michail_Romanov\3823B1PR4\lib_stack\Stack.h"
 TEST(TStackTest, StackIsEmpty) {
     TStack<int> stack(5); 
     EXPECT_TRUE(stack.isEmpty());  

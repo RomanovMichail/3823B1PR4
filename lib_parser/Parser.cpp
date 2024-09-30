@@ -1,5 +1,5 @@
-#include "E:\PROJECTS\3823B1PR4\lib_parser\Parser.h"
-#include "E:\PROJECTS\3823B1PR4\lib_stack\Stack.h"
+#include "C:\Michail_Romanov\3823B1PR4\lib_parser\Parser.h"
+#include "C:\Michail_Romanov\3823B1PR4\lib_stack\Stack.h"
 #include<iostream>
 
 
