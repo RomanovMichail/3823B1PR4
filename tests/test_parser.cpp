@@ -1,8 +1,8 @@
 
 #include<stdexcept>
 #include <gtest.h>
-#include "C:\Michail_Romanov\3823B1PR4\lib_parser\Parser.h"
-#include "C:\Michail_Romanov\3823B1PR4\lib_stack\Stack.h"
+#include "..\lib_parser\Parser.h"
+#include "..\lib_stack\Stack.h"
 
 
 TEST(ParserTest, Check_Exp) {

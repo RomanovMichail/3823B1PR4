@@ -1,5 +1,5 @@
 #include<gtest.h>
-#include"C:\Michail_Romanov\3823B1PR4\lib_queue\Queue.h"
+#include"..\lib_queue\Queue.h"
 
 
 TEST(TQueueTest, ConstructorTest) {
