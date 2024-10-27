@@ -132,4 +132,24 @@ TEST_F(TestListsLib, check_replace) {
 	list.replace(val, 9);
 	ASSERT_EQ(val->value(), 9);
 }
+TEST_F(TestListsLib, reverse_list) {
+	TList<int> s = TList<int>();
+	for (int i = 0; i < 10; i++) {
+		s.push_back(i);
+	}
+	TNode<int>* l = s.find(2);
+	s._tail->next(l);
+	EXPECT_EQ(s.hasCycle(), 1);
+	s._tail->next(nullptr);
+}
 
+TEST_F(TestListsLib, rabbit_and_turtle) {
+	TList<int> s = TList<int>();
+	for (int i = 0; i < 10; i++) {
+		s.push_back(i);
+	}
+	TNode<int>* l = s.find(2);
+	s._tail->next(l);
+	EXPECT_EQ(s.hasCycle(), 1);
+	s._tail->next(nullptr);
+}

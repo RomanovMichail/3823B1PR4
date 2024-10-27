@@ -30,7 +30,7 @@ TEST(TStackTest, PushTest) {
     EXPECT_THROW(stack.push(40), std::overflow_error);
 }
 
-//Заливаем два элемента, смотрим последний элемент
+
 TEST(TStackTest, PushAndTopTest) {
     TStack<int> stack(3);
     stack.push(10);

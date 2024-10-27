@@ -25,7 +25,9 @@ public:
 
     void replace(TNode<T>* node, const T& value);
     void replace(size_t pos, const T& value);
-
+    
+    bool hasCycle() const noexcept;    
+    bool reverse() noexcept;
 
     TNode<T>* _head;
     TNode<T>* _tail;
@@ -220,4 +222,35 @@ void TList<T>::replace(size_t pos, const T& value) {
     }
     TNode<T>* node = find(pos);
     node->value(value);
+}
+
+template <class T>
+bool TList<T>::hasCycle() const noexcept {
+    TNode<T>* turtle = _head;
+    TNode<T>* rabbit = _head;
+
+    while (rabbit != nullptr && rabbit->next() != nullptr) {
+        rabbit = rabbit->next()->next();
+        turtle = turtle->next();
+        if (rabbit == turtle) {
+            return true;
+        }
+    }
+    return false;
+}
+
+template <class T>
+bool TList<T>::reverse() noexcept {
+    TNode<T>* cur = _head->next();
+    TNode<T>* prev = _head;
+    while (cur->next() != nullptr) {
+        TNode<T>* next = cur->next();
+        cur->next(prev);
+        if (next == _head) {
+            return true;
+        }
+        prev = cur;
+        cur = next;
+    }
+    return false;
 }
