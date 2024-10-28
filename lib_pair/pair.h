@@ -28,11 +28,8 @@ public:
 
     TPair& operator=(const TPair& pair) noexcept;
     TPair& operator-=(const TPair& pair) noexcept;
-
-
     bool operator==(const TPair& pair) const noexcept;
     bool operator!=(const TPair& pair) const noexcept;
-
     bool operator>=(const TPair& pair) const noexcept;
     bool operator<=(const TPair& pair) const noexcept;
 

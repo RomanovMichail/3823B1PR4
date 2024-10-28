@@ -1,5 +1,4 @@
 #include"gtest.h"
-
 #include "..\lib_vector\vector.h""
 
 

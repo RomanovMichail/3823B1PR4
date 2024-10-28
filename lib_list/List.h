@@ -20,12 +20,9 @@ public:
     void pop_back();
     void erase(TNode<T>* node);
     void erase(size_t pos);
-
     bool isEmpty() const noexcept;
-
     void replace(TNode<T>* node, const T& value);
     void replace(size_t pos, const T& value);
-    
     bool hasCycle() const noexcept;    
     bool reverse() noexcept;
 
@@ -195,7 +192,7 @@ void TList<T>::erase(size_t pos) {
         ++index;
     }
 
-    if (current == nullptr || current->next() == nullptr) {
+    if (current == nullptr) {
         throw std::out_of_range("Position out of bounds");
     }
 
@@ -226,6 +223,10 @@ void TList<T>::replace(size_t pos, const T& value) {
 
 template <class T>
 bool TList<T>::hasCycle() const noexcept {
+    if (_head == nullptr) {
+        return false; 
+    }
+
     TNode<T>* turtle = _head;
     TNode<T>* rabbit = _head;
 
@@ -241,8 +242,13 @@ bool TList<T>::hasCycle() const noexcept {
 
 template <class T>
 bool TList<T>::reverse() noexcept {
+    if (_head == nullptr || _head->next() == nullptr) {
+        return false; 
+    }
+
     TNode<T>* cur = _head->next();
     TNode<T>* prev = _head;
+
     while (cur->next() != nullptr) {
         TNode<T>* next = cur->next();
         cur->next(prev);

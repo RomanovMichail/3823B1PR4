@@ -26,43 +26,31 @@ public:
     TDMassive(const T* arr, size_t n);
     TDMassive(size_t n, T value);
     TDMassive(const TDMassive& archive, size_t pos, size_t n);
-
     ~TDMassive();
 
     void print() const noexcept;
-
     inline bool empty() const noexcept;
     inline bool full() const noexcept;
- 
-
     size_t size() const;
     size_t capacity();
     const T* data() const;
-
     void swap(TDMassive& archive);
-
     TDMassive& assign(const TDMassive& archive);
-
     void clear();
     void resize(size_t n, T value);
     void reserve(size_t n);
-
     void push_back(T value);             
     void pop_back();                  
     void push_front(T value);           
     void pop_front();                   
-
     TDMassive& insert(const T* arr, size_t n, size_t pos);
     TDMassive& insert(T value, size_t pos);
-
     TDMassive& replace(size_t pos, T new_value);
-
     TDMassive& erase(size_t pos, size_t n);
     TDMassive& remove_all(T value);
     TDMassive& remove_first(T value);
     TDMassive& remove_last(T value);
     TDMassive& remove_by_index(size_t pos);
-
     size_t* find_all(T value) const noexcept;
     size_t find_first(T value);
     size_t find_last(T value);
@@ -115,7 +103,7 @@ template <typename T>
 TDMassive<T>::TDMassive(const TDMassive& archive, size_t pos, size_t n)
     : _capacity(n), _size(n), _deleted(0) {
     if (pos + n > archive._size) {
-        throw std::out_of_range("Position and size out of range in copy constructor.");
+        throw std::out_of_range("Position and size out of range");
     }
     _data = new T[_capacity];
     _states = new State[_capacity];
@@ -257,7 +245,7 @@ TDMassive<T>& TDMassive<T>::insert(const T* arr, size_t n, size_t pos) {
 template <typename T>
 TDMassive<T>& TDMassive<T>::replace(size_t pos, T new_value) {
     if (pos >= _size) {
-        throw std::out_of_range("Position out of range in replace method.");
+        throw std::out_of_range("Position out of range");
     }
     _data[pos] = new_value;
     return *this;
@@ -267,7 +255,7 @@ TDMassive<T>& TDMassive<T>::replace(size_t pos, T new_value) {
 template <typename T>
 TDMassive<T>& TDMassive<T>::erase(size_t pos, size_t n) {
     if (pos + n > _size) {
-        throw std::out_of_range("Position and range out of bounds in erase.");
+        throw std::out_of_range("Position and range out of bounds");
     }
     for (size_t i = pos; i < pos + n; i++) {
         _states[i] = State::deleted;
@@ -314,7 +302,7 @@ TDMassive<T>& TDMassive<T>::remove_last(T value) {
 template <typename T>
 TDMassive<T>& TDMassive<T>::remove_by_index(size_t pos) {
     if (pos >= _size) {
-        throw std::out_of_range("Index out of range in remove_by_index.");
+        throw std::out_of_range("Index out of range");
     }
     _states[pos] = State::deleted;
     return *this;

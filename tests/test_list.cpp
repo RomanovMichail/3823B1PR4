@@ -2,26 +2,23 @@
 #include"..\lib_list\Node.h"
 #include"gtest.h"
 
-class TestListsLib : public ::testing::Test {
-protected:
-	TList<int> list = TList<int>();
-};
 
-TEST_F(TestListsLib, check_push_front) {
-	list.push_front(1);
-	list.push_front(2);
-	list.push_front(3);
-	EXPECT_EQ(list._head->value(), 3);
-	EXPECT_EQ(list._head->next()->value(), 2);
-	EXPECT_EQ(list._tail->value(), 1);
+
+TEST(TestListsLib, push_front) {
+	TList<int> list;
+	list.push_front(10);
+	EXPECT_EQ(list.get_size(), 1);
+	EXPECT_EQ(list._head->value(), 10);
 }
 
-TEST_F(TestListsLib, check_empty) {
+TEST(TestListsLib, empty) {
+	TList<int> list;
 	list.push_front(1);
 	EXPECT_EQ(list._head->value(), list._tail->value());
 }
 
-TEST_F(TestListsLib, check_push_back) {
+TEST(TestListsLib, push_back) {
+	TList<int> list;
 	list.push_back(1);
 	list.push_back(2);
 	list.push_back(3);
@@ -30,35 +27,36 @@ TEST_F(TestListsLib, check_push_back) {
 	EXPECT_EQ(list._tail->value(), 3);
 }
 
-TEST(TestLists, check_find) {
+TEST(TestLists, find) {
 	TList<int> list;
-	list.push_back(5);
-	list.push_back(6);
-	list.push_back(7);
-	list.push_back(8);
-	TNode<int>* val = list.find(6);
-	EXPECT_EQ(val->value(), 6);
-	EXPECT_EQ(val->next()->value(), 7);
-}
-
-TEST_F(TestListsLib, check_insert_pos) {
+	list.push_back(1);
+	list.push_back(2);
+	list.push_back(3);
 	list.push_back(4);
-	list.push_back(5);
-	list.push_back(6);
-	list.insert(1, 2);
-	EXPECT_EQ(list._head->next()->value(), 2);
-	EXPECT_EQ(list._head->next()->next()->value(), 5);
+	TNode<int>* val = list.find(3);
+	EXPECT_EQ(val->value(), 3);
+	EXPECT_EQ(val->next()->value(), 4);
 }
 
-TEST_F(TestListsLib, check_insert_throw) {
+TEST(TestListsLib,  insert_pos) {
+	TList<int> list;
+	list.push_back(10);
+	list.push_back(30);
+	list.insert(1, 20);  
+	EXPECT_EQ(list.find(20)->value(), 20);
+}
+
+TEST(TestListsLib, insert_throw) {
+		TList<int> list;
 		list.push_back(1);
 		list.push_back(2);
 		list.push_back(3);
-		ASSERT_THROW(list.insert(5, 10), std::out_of_range);
-		ASSERT_THROW(list.insert(-1, 10), std::out_of_range);
+		ASSERT_THROW(list.insert(12, 5), std::out_of_range);
+		ASSERT_THROW(list.insert(-2, 10), std::out_of_range);
 }
 
-TEST_F(TestListsLib, check_insert_node) {
+TEST(TestListsLib, insert_node) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	list.push_back(7);
@@ -68,13 +66,15 @@ TEST_F(TestListsLib, check_insert_node) {
 	EXPECT_EQ(val->next()->next()->value(), 7);
 }
 
-TEST_F(TestListsLib, check_insert_node_throw) {
+TEST(TestListsLib, insert_node_throw) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	ASSERT_ANY_THROW(list.insert(nullptr, 5));
 }
 
-TEST_F(TestListsLib, check_pop_front) {
+TEST(TestListsLib, pop_front) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	list.push_back(7);
@@ -82,11 +82,13 @@ TEST_F(TestListsLib, check_pop_front) {
 	ASSERT_EQ(list._head->value(), 6);
 }
 
-TEST_F(TestListsLib, check_pop_front_throw) {
+TEST(TestListsLib, pop_front_throw) {
+	TList<int> list;
 	ASSERT_ANY_THROW(list.pop_front());
 }
 
-TEST_F(TestListsLib, check_pop_back) {
+TEST(TestListsLib,  pop_back) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	list.push_back(7);
@@ -96,7 +98,8 @@ TEST_F(TestListsLib, check_pop_back) {
 }
 
 
-TEST_F(TestListsLib, check_erase_node) {
+TEST(TestListsLib, erase_node) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	list.push_back(7);
@@ -106,11 +109,13 @@ TEST_F(TestListsLib, check_erase_node) {
 	ASSERT_EQ(list._head->next()->next()->value(), 8);
 }
 
-TEST_F(TestListsLib, check_erase_node_throw) {
+TEST(TestListsLib, erase_node_throw) {
+	TList<int> list;
 	ASSERT_ANY_THROW(list.erase(nullptr));
 }
 
-TEST_F(TestListsLib, check_erase_pos) {
+TEST(TestListsLib, erase_pos) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	list.push_back(7);
@@ -118,13 +123,15 @@ TEST_F(TestListsLib, check_erase_pos) {
 	ASSERT_EQ(list._head->next()->value(), 7);
 }
 
-TEST_F(TestListsLib, check_erase_pos_throw) {
+TEST(TestListsLib, erase_pos_throw) {
+	TList<int> list;
 	list.push_back(5);
 	ASSERT_ANY_THROW(list.erase(-1));
 	ASSERT_ANY_THROW(list.erase(2));
 }
 
-TEST_F(TestListsLib, check_replace) {
+TEST(TestListsLib, replace) {
+	TList<int> list;
 	list.push_back(5);
 	list.push_back(6);
 	list.push_back(7);
@@ -132,24 +139,37 @@ TEST_F(TestListsLib, check_replace) {
 	list.replace(val, 9);
 	ASSERT_EQ(val->value(), 9);
 }
-TEST_F(TestListsLib, reverse_list) {
+TEST(TestListsLib, rabbit_and_turtle) {
 	TList<int> s = TList<int>();
 	for (int i = 0; i < 10; i++) {
 		s.push_back(i);
 	}
-	TNode<int>* l = s.find(2);
-	s._tail->next(l);
+	TNode<int>* cycleStart = s.find(2);
+	s._tail->next(cycleStart); 
+
 	EXPECT_EQ(s.hasCycle(), 1);
+
+	s._tail->next(nullptr); 
+}
+TEST(TestListsLib, reverse_list) {
+	TList<int> s = TList<int>();
+	for (int i = 0; i < 10; i++) {
+		s.push_back(i);
+	}
+	TNode<int>* cycleStart = s.find(2);
+	s._tail->next(cycleStart);
+
+	EXPECT_EQ(s.reverse(), 1);
+
 	s._tail->next(nullptr);
 }
 
-TEST_F(TestListsLib, rabbit_and_turtle) {
-	TList<int> s = TList<int>();
-	for (int i = 0; i < 10; i++) {
-		s.push_back(i);
-	}
-	TNode<int>* l = s.find(2);
-	s._tail->next(l);
-	EXPECT_EQ(s.hasCycle(), 1);
-	s._tail->next(nullptr);
+TEST(TestListsLib, errays) {
+	TList<int> list;
+	list.push_back(5);
+	list.push_back(6);
+	list.push_back(7);
+	list.erase(2);
+	EXPECT_EQ(list.get_size(), 2);
+	EXPECT_EQ(list._tail->value(), 6);
 }

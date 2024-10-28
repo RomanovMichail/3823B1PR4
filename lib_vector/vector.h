@@ -18,7 +18,6 @@ public:
 
     const T& operator[](int index) const noexcept;
     T& operator[](int index) noexcept;
-
     TVector<T> operator+(const TVector<T>& other) const;
     TVector<T> operator-(const TVector<T>& other) const;
     TVector<T>& operator+=(const TVector<T>& other);
@@ -27,7 +26,6 @@ public:
     TVector<T>& operator*=(const TVector<T>& other);
     int operator*(const TVector<T>& other) const;
     TVector<T> operator*(T scalar) const;
-
     bool operator==(const TVector<T>& other) const;
     bool operator!=(const TVector<T>& other) const;
 
@@ -107,7 +105,7 @@ TVector<T>& TVector<T>::operator*=(const T& scalar) {
 template <typename T>
 TVector<T>& TVector<T>::operator*=(const TVector<T>& other) {
     if (size() != other.size()) {
-        throw std::invalid_argument("Vectors must have the same size for element-wise multiplication.");
+        throw std::invalid_argument("Vectors must have the same size");
     }
     for (size_t i = 0; i < size(); ++i) {
         (*this)[i] *= other[i];
