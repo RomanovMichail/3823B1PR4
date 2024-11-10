@@ -120,3 +120,16 @@ TEST(TDMassiveTest, Assign) {
     EXPECT_EQ(massive2.size(), 1);
     EXPECT_EQ(massive2.data()[0], 1);
 }
+TEST(TDMassiveTest, reserve) {
+    int value[] = { 1,2,3,4,5 };
+    TDMassive<int> massive(value, 5);
+    massive.reserve(25, 2);
+    EXPECT_EQ(massive.capacity(), 25);
+    EXPECT_EQ(massive.size(), 3);
+
+    EXPECT_EQ(massive.data()[0], 3);
+    EXPECT_EQ(massive.data()[1], 4);   
+    EXPECT_EQ(massive.data()[2], 5);
+}
+
+

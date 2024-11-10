@@ -38,11 +38,11 @@ public:
     TDMassive& assign(const TDMassive& archive);
     void clear();
     void resize(size_t n, T value);
-    void reserve(size_t n);
+    void reserve(size_t n, size_t start_index = 0);
     void push_back(T value);             
     void pop_back();                  
     void push_front(T value);           
-    void pop_front();                   
+    void pop_front();   
     TDMassive& insert(const T* arr, size_t n, size_t pos);
     TDMassive& insert(T value, size_t pos);
     TDMassive& replace(size_t pos, T new_value);
@@ -86,6 +86,14 @@ TDMassive<T>::TDMassive(const T* arr, size_t n) : _capacity(n), _size(n), _delet
         _data[i] = arr[i];
         _states[i] = State::busy;
     }
+    std::cout << "{ ";
+    for (size_t i = 0; i < _size; i++) {
+        if (_states[i] != State::deleted) {
+            std::cout << _data[i];
+            if (i < _size - 1) std::cout << ", ";
+        }
+    }
+    std::cout << " }" << std::endl;
 }
 
 
@@ -363,31 +371,38 @@ void TDMassive<T>::resize(size_t n, T value) {
 }
 
 template <typename T>
-void TDMassive<T>::reserve(size_t n) {
+void TDMassive<T>::reserve(size_t n, size_t start_index = 0) {
     if (n <= _capacity) return;
+
     T* new_data = new T[n];
     State* new_states = new State[n];
-    for (size_t i = 0; i < _size; i++) {
-        new_data[i] = _data[i];
-        new_states[i] = _states[i];
+
+    size_t j = 0;
+    for (size_t i = start_index; i < _capacity; i++, j++) {
+        new_data[j] = _data[i];
+        new_states[j] = _states[i];
     }
-    for (size_t i = _size; i < n; i++) {
-        new_states[i] = State::empty;
-    }
+
     delete[] _data;
     delete[] _states;
+
     _data = new_data;
     _states = new_states;
     _capacity = n;
+    _size = j;  
 }
+
 
 template <typename T>
 void TDMassive<T>::print() const noexcept {
+    std::cout << "{ ";
     for (size_t i = 0; i < _size; i++) {
         if (_states[i] != State::deleted) {
-            std::cout << _data[i] << ", ";
+            std::cout << _data[i];
+            if (i < _size - 1) std::cout << ", ";
         }
     }
+    std::cout << " }" << std::endl;
 }
 
 template <typename T>

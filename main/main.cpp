@@ -6,10 +6,14 @@
 #include <iostream>
 #include <iomanip>
 #include "../lib_easy_example/easy_example.h"
+#include "../lib_dmassive/dmassive.h"
 
 int main() {
   int a, b;
   float result;
+  int value[] = { 7,2,3,4,5 };
+  TDMassive<int> massive(value, 5);
+
 
   a = 1; b = 4;
 

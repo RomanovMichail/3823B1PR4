@@ -39,14 +39,6 @@ TEST(TPairTest, Set_First_Second) {
     EXPECT_EQ(pair.second(), 22);
 }
 
-TEST(TPairTest, SubtractAssignmentOperator) {
-    TPair<int, int> pair1(10, 20);
-    TPair<int, int> pair2(3, 7);
-    pair1 -= pair2;
-    EXPECT_EQ(pair1.first(), 7);
-    EXPECT_EQ(pair1.second(), 13);
-}
-
 
 TEST(TPairTest, EqualityOperators) {
     TPair<int, int> pair1(5, 10);
@@ -87,8 +79,5 @@ TEST(TPairTest, Swap) {
 }
 
 
-TEST(TPairTest, ToString) {
-    TPair<int, int> pair(5, 10);
-    EXPECT_EQ(pair.to_string(), "(5, 10)");
-}
+
 
