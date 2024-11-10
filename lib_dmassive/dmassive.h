@@ -82,15 +82,13 @@ template <typename T>
 TDMassive<T>::TDMassive(const T* arr, size_t n) : _capacity(n), _size(n), _deleted(0) {
     _data = new T[_capacity];
     _states = new State[_capacity];
+    std::cout << "{ ";
     for (size_t i = 0; i < n; i++) {
         _data[i] = arr[i];
         _states[i] = State::busy;
-    }
-    std::cout << "{ ";
-    for (size_t i = 0; i < _size; i++) {
-        if (_states[i] != State::deleted) {
-            std::cout << _data[i];
-            if (i < _size - 1) std::cout << ", ";
+        std::cout << _data[i]; 
+        if (i < n - 1) {
+            std::cout << ", "; 
         }
     }
     std::cout << " }" << std::endl;
