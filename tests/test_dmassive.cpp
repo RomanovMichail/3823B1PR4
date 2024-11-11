@@ -10,7 +10,7 @@ TEST(TDMassiveTest, DefaultConstructor) {
 
 
 TEST(TDMassiveTest, ConstructorWithArray) {
-    int arr[] = { 1, 2, 3 };
+    int arr[] = { 1, 2, 3};
     TDMassive<int> massive(arr, 3);
     EXPECT_EQ(massive.size(), 3);
     EXPECT_EQ(massive.capacity(), 3);

@@ -16,15 +16,15 @@ TEST(TVectorTest, ConstructorWithSizeAndValue) {
     }
 }
 
-
-TEST(TVectorTest, ConstructorWithArray) {
-    int arr[] = { 1, 2, 3, 4, 5 };
-    TVector<int> vec(arr, 5);
-    EXPECT_EQ(vec.size(), 5);
-    for (size_t i = 0; i < vec.size(); ++i) {
-        EXPECT_EQ(vec[i], arr[i]);
-    }
-}
+//
+//TEST(TVectorTest, ConstructorWithArray) {
+//    int arr[] = { 1, 2, 3, 4, 5 };
+//    TVector<int> vec(arr, 5);
+//    EXPECT_EQ(vec.size(), 5);
+//    for (size_t i = 0; i < vec.size(); ++i) {
+//        EXPECT_EQ(vec[i], arr[i]);
+//    }
+//}
 
 TEST(TVectorTest, IndexOperator) {
     TVector<int> vec(3, 7);

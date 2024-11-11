@@ -1,15 +1,14 @@
 #include "node.h"
 #pragma once
 #include "iostream"
+
 template <class T>
 class TList {
-  
-
 public:
     TList();
     TList(const TList<T>& list);
     ~TList();
-
+    typedef  TIterator<T> iterator;
     void push_front(const T& value) noexcept;
     void push_back(const T& value) noexcept;
     void insert(const TNode<T>* node, T value);
@@ -23,13 +22,41 @@ public:
     bool isEmpty() const noexcept;
     void replace(TNode<T>* node, const T& value);
     void replace(size_t pos, const T& value);
-    bool hasCycle() const noexcept;    
+    bool hasCycle() const noexcept;
     bool reverse() noexcept;
 
     TNode<T>* _head;
     TNode<T>* _tail;
 
 
+
+private:
+    template <class T>
+    class TIterator {
+        TNode<T> _pcur;
+
+
+    public:
+            TIterator() {
+            _pcur = _head;
+        }
+            TIterator(TIterator<T> iterator) {
+                _pcur = iterator._pcurl
+            }
+      
+        TIterator<T>& operator++() {
+            TIterator<T>& prev = new TIterator<T>(*this);
+                _pcur = pcur->next();
+            return prev;
+        }
+        TIterator<T>& operator++(TIterator<T>& iterator) {
+            
+                _pcur = pcur->next();
+            return *this;
+        }
+
+        
+    };
 };
 template <class T>
 TList<T>::TList() : _head(nullptr), _tail(nullptr) {}
@@ -260,3 +287,4 @@ bool TList<T>::reverse() noexcept {
     }
     return false;
 }
+
