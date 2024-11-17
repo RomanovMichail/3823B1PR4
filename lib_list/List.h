@@ -8,7 +8,7 @@ public:
     TList();
     TList(const TList<T>& list);
     ~TList();
-    typedef  TIterator<T> iterator;
+    //typedef  TIterator<T> iterator;
     void push_front(const T& value) noexcept;
     void push_back(const T& value) noexcept;
     void insert(const TNode<T>* node, T value);
@@ -30,33 +30,33 @@ public:
 
 
 
-private:
-    template <class T>
-    class TIterator {
-        TNode<T> _pcur;
-
-
-    public:
-            TIterator() {
-            _pcur = _head;
-        }
-            TIterator(TIterator<T> iterator) {
-                _pcur = iterator._pcurl
-            }
-      
-        TIterator<T>& operator++() {
-            TIterator<T>& prev = new TIterator<T>(*this);
-                _pcur = pcur->next();
-            return prev;
-        }
-        TIterator<T>& operator++(TIterator<T>& iterator) {
-            
-                _pcur = pcur->next();
-            return *this;
-        }
-
-        
-    };
+//private:
+//    template <class T>
+//    class TIterator {
+//        TNode<T> _pcur;
+//
+//
+//    public:
+//            TIterator() {
+//            _pcur = _head;
+//        }
+//            TIterator(TIterator<T> iterator) {
+//                _pcur = iterator._pcurl
+//            }
+//      
+//        TIterator<T>& operator++() {
+//            TIterator<T>& prev = new TIterator<T>(*this);
+//                _pcur = pcur->next();
+//            return prev;
+//        }
+//        TIterator<T>& operator++(TIterator<T>& iterator) {
+//            
+//                _pcur = pcur->next();
+//            return *this;
+//        }
+//
+//        
+//    };
 };
 template <class T>
 TList<T>::TList() : _head(nullptr), _tail(nullptr) {}

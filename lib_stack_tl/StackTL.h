@@ -10,6 +10,7 @@ private:
     size_t _maxSize;
 
 public:
+    TStackTL();
 	TStackTL(size_t maxSize);
 	~TStackTL();
 	bool isEmpty() const noexcept;
@@ -22,6 +23,8 @@ public:
 
 
 };
+template <class T>
+TStackTL<T>::TStackTL() : _size(0) {};
 template <class T>
 TStackTL<T>::TStackTL(size_t maxSize) : _size(0), _maxSize(maxSize) {};
 

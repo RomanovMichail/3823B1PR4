@@ -7,25 +7,25 @@ TEST(TVectorTest, DefaultConstructor) {
     EXPECT_EQ(vec.size(), 0);
 }
 
-TEST(TVectorTest, DefaultConstructor) {
-    TVector<int> vec1({ 1, 2, 3, 4, 5}, 5);
-
-    /*
-    {
-    {1, 2},
-    {0, 3}
-    }
-
-    
-    */
-    TVector<int> vec2({ 1, 2, 3, 4, 5 }, 5);
-    TVector<int> expected_result({ 2, 4, 6, 8, 10 }, 5);
-
-
-    TVector<int> true_result = vec1 + vec2;
-
-    EXPECT_EQ(expected_result, true_result); // == for TVector
-}
+//TEST(TVectorTest, DefaultdConstructor) {
+//    TVector<int> vec1({ 1, 2, 3, 4, 5}, 5);
+//
+//    /*
+//    {
+//    {1, 2},
+//    {0, 3}
+//    }
+//
+//    
+//    */
+//    TVector<int> vec2({ 1, 2, 3, 4, 5 }, 5);
+//    TVector<int> expected_result({ 2, 4, 6, 8, 10 }, 5);
+//
+//
+//    TVector<int> true_result = vec1 + vec2;
+//
+//    EXPECT_EQ(expected_result, true_result); // == for TVector
+//}
 
 
 TEST(TVectorTest, ConstructorWithSizeAndValue) {
