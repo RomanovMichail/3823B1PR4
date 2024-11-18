@@ -1,5 +1,5 @@
 #pragma once
-#define STEP_CAPACITY 15
+#define STEP_CAPACITY 100000
 #include <cmath>
 #include <stdexcept>
 enum State { empty, busy, deleted };
