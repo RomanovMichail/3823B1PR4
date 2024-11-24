@@ -1,6 +1,10 @@
 // Copyright 2024 Marina Usova
+<<<<<<< HEAD
 //Тесты проверяющие единичные случаи
 //Возможно нужны тесты для поп 
+=======
+//Добавить единмчные тесты, в миллисекундах
+>>>>>>> 976ae5b8bf6efa51e58db624a5f31aaf6dba44c7
 #define EASY_EXAMPLE
 #ifdef EASY_EXAMPLE
 #include <iostream>
@@ -11,6 +15,58 @@
 #include"..\lib_list\List.h"
 #include "..\lib_stack_tl\StackTL.h"
 #include "..\lib_stack_dm\StackDM.h"
+template <typename T>
+void testPerformanceForDMassive(int n) {
+    TDMassive<T> mas;
+    std::cout << "TEST FOR DMassive " << std::endl;
+    std::cout << "Elements " << n << " \n";
+
+    auto startPush = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < n; ++i) {
+        mas.push_back(i);
+    }
+    auto endPush = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> durationPush = endPush - startPush;
+    std::cout << "Push time: " << durationPush.count() << " seconds\n";
+
+    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
+    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+
+    auto startPop = std::chrono::high_resolution_clock::now();
+    mas.pop_back();
+    auto endPop = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> durationPop = endPop - startPop;
+    std::cout << "Pop time: " << durationPop.count() << " seconds\n";
+
+    std::cout << "-----------------------------------\n";
+
+}
+template <typename T>
+void testPerformanceForList(int n) {
+    TList<T> l;
+    std::cout << "TEST FOR LIST " << std::endl;
+    std::cout << "Elements " << n << " \n";
+
+    auto startPush = std::chrono::high_resolution_clock::now();
+    for (int i = 0; i < n; ++i) {
+        l.push_back(i);
+    }
+    auto endPush = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> durationPush = endPush - startPush;
+    std::cout << "Push time: " << durationPush.count() << " seconds\n";
+
+    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
+    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+
+    auto startPop = std::chrono::high_resolution_clock::now();
+     l.pop_back();
+    auto endPop = std::chrono::high_resolution_clock::now();
+    std::chrono::duration<double> durationPop = endPop - startPop;
+    std::cout << "Pop time: " << durationPop.count() << " seconds\n";
+
+    std::cout << "-----------------------------------\n";
+
+}
 
 template <typename T>
 void testPerformanceForDMassiveEdinichSl(int n) {
@@ -230,6 +286,7 @@ void testPerformanceForDM(int n) {
 }
 
 int main() {
+<<<<<<< HEAD
     int a, b;
     float result;
     testPerformanceForDMassiveEdinichSl<int>(1000000);
@@ -241,6 +298,24 @@ int main() {
     testPerformanceForDMassiveFront<int>(10000);
     /*testPerformanceForDMassiveFront<int>(100000);*/
     
+=======
+  int a, b;
+  float result;
+  testPerformanceForDMassive<int>(100);
+  testPerformanceForDMassive<int>(1000);
+  testPerformanceForDMassive<int>(10000);
+  testPerformanceForDMassive<int>(100000);
+
+  testPerformanceForList<int>(100);
+  testPerformanceForList<int>(1000);
+  testPerformanceForList<int>(10000);
+  testPerformanceForList<int>(100000);
+
+  testPerformanceForTL<int>(100);
+  testPerformanceForTL<int>(1000);
+  testPerformanceForTL<int>(10000);
+  testPerformanceForTL<int>(100000);
+>>>>>>> 976ae5b8bf6efa51e58db624a5f31aaf6dba44c7
 
     testPerformanceForListFront<int>(100000);
     testPerformanceForListFront<int>(1000000);
