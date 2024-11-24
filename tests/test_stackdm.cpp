@@ -58,7 +58,7 @@ TEST(TStackDMTest, PopTest) {
 
 
 TEST(TStackDMTLTest, DestructorTest) {
-    TStackDM<int>* stack = new TStackDM<int>(5);
+    TStackDM<int>* stack = new TStackDM<int>;
     stack->push(1);
     stack->push(2);
     delete stack;

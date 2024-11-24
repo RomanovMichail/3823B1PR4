@@ -9,7 +9,7 @@ private:
     TDMassive<T> _array; 
 public:
     TStackDM();
-    TStackDM(size_t size);
+    explicit TStackDM(size_t size);
     ~TStackDM();
 
     bool isEmpty() const noexcept; 
@@ -23,10 +23,10 @@ public:
 
 template <typename T>
 TStackDM<T>::TStackDM() = default;
-
 template <typename T>
-TStackDM<T>::TStackDM(size_t size) : _array(size, T()) {};
-
+TStackDM<T>::TStackDM(size_t size) : _array(size) {
+   
+}
 
 template <typename T>
 TStackDM<T>::~TStackDM() = default;

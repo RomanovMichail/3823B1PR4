@@ -8,7 +8,7 @@ TEST(TVectorTest, DefaultConstructor) {
 }
 
 //TEST(TVectorTest, DefaultdConstructor) {
-//    TVector<int> vec1({ 1, 2, 3, 4, 5}, 5);
+//    TVector<int> vec1({ 1, 2, 3, 4, 5});
 //
 //    /*
 //    {

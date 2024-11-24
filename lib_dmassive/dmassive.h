@@ -1,5 +1,5 @@
 #pragma once
-#define STEP_CAPACITY 15
+#define STEP_CAPACITY 100000000
 #include <cmath>
 #include <stdexcept>
 enum State { empty, busy, deleted };
@@ -22,9 +22,11 @@ class TDMassive {
     size_t _deleted;          
 public:
     TDMassive();
+    TDMassive(size_t n);
     TDMassive(const TDMassive& archive);
     TDMassive(const T* arr, size_t n);
     TDMassive(size_t n, T value);
+    TDMassive(std::initializer_list<T> list);
     TDMassive(const TDMassive& archive, size_t pos, size_t n);
     ~TDMassive();
 
@@ -55,7 +57,7 @@ public:
     size_t find_first(T value);
     size_t find_last(T value);
 private:
-    size_t count_value(T value);
+    size_t count_value(T value) const;
 };
 
 template <typename T>
@@ -66,6 +68,16 @@ TDMassive<T>::TDMassive() {
     _states = new State[_capacity];
     for (size_t i = 0; i < STEP_CAPACITY; i++) {
         _states[i] = State::empty;
+    }
+}
+template <typename T>
+TDMassive<T>::TDMassive(size_t n)
+    : _capacity(n), _size(n), _deleted(0) {
+    _data = new T[_capacity];
+    _states = new State[_capacity];
+    for (size_t i = 0; i < n; i++) {
+        _data[i] = T(); 
+        _states[i] = State::busy;
     }
 }
 template <typename T>
@@ -82,18 +94,24 @@ template <typename T>
 TDMassive<T>::TDMassive(const T* arr, size_t n) : _capacity(n), _size(n), _deleted(0) {
     _data = new T[_capacity];
     _states = new State[_capacity];
-    std::cout << "{ ";
+
     for (size_t i = 0; i < n; i++) {
         _data[i] = arr[i];
         _states[i] = State::busy;
-        std::cout << _data[i]; 
-        if (i < n - 1) {
-            std::cout << ", "; 
-        }
+        
     }
-    std::cout << " }" << std::endl;
 }
-
+template <typename T>
+TDMassive<T>::TDMassive(std::initializer_list<T> list) : _capacity(list.size()), _size(list.size()), _deleted(0) {
+    _data = new T[_capacity];
+    _states = new State[_capacity];
+    size_t i = 0;
+    for (const auto& value : list) {
+        _data[i] = value;
+        _states[i] = State::busy;
+        i++;
+    }
+}
 
 template <typename T>
 TDMassive<T>::TDMassive(size_t n, T value) : _capacity(n), _size(n), _deleted(0) {
@@ -199,7 +217,10 @@ void TDMassive<T>::push_back(T value) {
 
 template <typename T>
 void TDMassive<T>::pop_back() {
-    if (empty()) return;
+    if (empty()) {
+        throw std::logic_error("empty!");
+    }
+    _data[_size - 1] = T();      
     _states[--_size] = State::deleted;
 }
 
@@ -420,7 +441,7 @@ size_t* TDMassive<T>::find_all(T value) const noexcept {
 }
 
 template <typename T>
-size_t TDMassive<T>::count_value(T value) {
+size_t TDMassive<T>::count_value(T value) const {
     size_t count = 0;
     for (size_t i = 0; i < _size; i++) {
         if (_states[i] == State::busy && _data[i] == value) {

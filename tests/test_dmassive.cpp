@@ -7,7 +7,21 @@ TEST(TDMassiveTest, DefaultConstructor) {
     EXPECT_EQ(massive.capacity(), STEP_CAPACITY);
    
 }
+TEST(TDMassiveTest, ConstructorWithArg) {
+    TDMassive<int> massive({ 1, 2, 3, 4, 5 });
 
+    EXPECT_EQ(massive.size(), 5);  
+
+    const int* data = massive.data();
+    EXPECT_EQ(data[0], 1);
+    EXPECT_EQ(data[1], 2);
+    EXPECT_EQ(data[2], 3);
+    EXPECT_EQ(data[3], 4);
+    EXPECT_EQ(data[4], 5);
+
+    EXPECT_FALSE(massive.empty());
+    EXPECT_EQ(massive.size(), massive.capacity());
+}
 
 TEST(TDMassiveTest, ConstructorWithArray) {
     int arr[] = { 1, 2, 3};
@@ -90,7 +104,6 @@ TEST(TDMassiveTest, FindFirst) {
     massive.push_back(2);
     EXPECT_EQ(massive.find_first(2), 1);
 }
-
 
 TEST(TDMassiveTest, RemoveAll) {
     TDMassive<int> massive;

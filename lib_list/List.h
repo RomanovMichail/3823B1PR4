@@ -7,6 +7,7 @@ class TList {
 public:
     TList();
     TList(const TList<T>& list);
+    TList(size_t size);
     ~TList();
     //typedef  TIterator<T> iterator;
     void push_front(const T& value) noexcept;
@@ -27,8 +28,7 @@ public:
 
     TNode<T>* _head;
     TNode<T>* _tail;
-
-
+  
 
 //private:
 //    template <class T>
@@ -60,6 +60,14 @@ public:
 };
 template <class T>
 TList<T>::TList() : _head(nullptr), _tail(nullptr) {}
+
+template <class T>
+TList<T>::TList(size_t size) : _head(nullptr), _tail(nullptr) {
+    for (size_t i = 0; i < size; ++i) {
+        push_back(T()); 
+    }
+}
+
 template <class T>
 TList<T>::TList(const TList<T>& list) : _head(nullptr), _tail(nullptr) {
     TNode<T>* current = list._head;
@@ -169,16 +177,18 @@ void TList<T>::pop_back() {
 
     if (_head == _tail) {
         delete _head;
-        _head = _tail = nullptr;
+        _head = nullptr;
+        _tail = nullptr;
     }
     else {
         TNode<T>* current = _head;
+        
         while (current->next() != _tail) {
             current = current->next();
         }
         delete _tail;
         _tail = current;
-        _tail->next(nullptr);
+        _tail->next(nullptr); 
     }
 }
 template <class T>
