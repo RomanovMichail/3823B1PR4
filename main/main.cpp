@@ -1,10 +1,5 @@
 // Copyright 2024 Marina Usova
-
-//Тесты проверяющие единичные случаи
-//Возможно нужны тесты для поп 
-
-//Добавить единмчные тесты, в миллисекундах
-
+// единичные тесты
 #define EASY_EXAMPLE
 #ifdef EASY_EXAMPLE
 #include <iostream>
@@ -56,35 +51,7 @@ void testPerformanceForDMassiveEdinichSl(int n) {
 
 }
 
-template <typename T>
-void testPerformanceForDMassiveFRONTPOP(int n) {
-    TDMassive<T> mas;
-    std::cout << "TEST FOR DMassive FRONTPOP" << std::endl;
-    std::cout << "Elements " << n << " \n";
-    auto startPush = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; i++)
-    {
-        mas.push_back(i);
 
-    }
-
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
-
-
-    auto startPop = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; ++i)
-    {
-        mas.pop_front();
-    }
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-
-    std::cout << "-----------------------------------\n";
-
-}
 
 template <typename T>
 void testPerformanceForDMassiveFront(int n) {
@@ -94,11 +61,11 @@ void testPerformanceForDMassiveFront(int n) {
 
     auto startPush = std::chrono::high_resolution_clock::now();
 
-    for (size_t i = 0; i < n; i++)
-    {
-        mas.push_front(i);
+    
+    
+        mas.push_front(2);
 
-    }
+    
 
     auto endPush = std::chrono::high_resolution_clock::now();
     auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
@@ -108,11 +75,10 @@ void testPerformanceForDMassiveFront(int n) {
     std::cout << "Memory used: " << memoryUsed << " bytes\n";
 
     auto startPop = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; ++i)
-    {
+   
         mas.pop_front();
 
-    }
+    
     auto endPop = std::chrono::high_resolution_clock::now();
     auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
     std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
@@ -272,10 +238,10 @@ int main() {
 //testPerformanceForDMassiveFRONTPOP<int>(100000);
 //testPerformanceForDMassiveFRONTPOP<int>(1000000);
 
-//testPerformanceForDMassiveFront<int>(100);
-//testPerformanceForDMassiveFront<int>(1000);
-//testPerformanceForDMassiveFront<int>(10000);
-//testPerformanceForDMassiveFront<int>(100000);
+testPerformanceForDMassiveFront<int>(100);
+testPerformanceForDMassiveFront<int>(1000);
+testPerformanceForDMassiveFront<int>(10000);
+testPerformanceForDMassiveFront<int>(100000);
 
 
 //testPerformanceForListFront<int>(100000);

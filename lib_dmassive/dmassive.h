@@ -1,5 +1,5 @@
 #pragma once
-#define STEP_CAPACITY 100000000
+#define STEP_CAPACITY 100
 
 #include <cmath>
 #include <stdexcept>
