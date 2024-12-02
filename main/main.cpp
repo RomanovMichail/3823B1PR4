@@ -17,11 +17,10 @@ void testPerformanceForDMassiveEdinichSl(int n) {
     std::cout << "TEST FOR DMassive Edinich " << std::endl;
     std::cout << "Elements " << n << " \n";
     auto startPush = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; i++)
-    {
+   
         mas.push_back(i);
 
-    }
+    
      
     auto endPush = std::chrono::high_resolution_clock::now();
     auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
@@ -39,10 +38,9 @@ void testPerformanceForDMassiveEdinichSl(int n) {
     std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
    
     auto startPop = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; ++i)
-    {
+  
     mas.pop_back();
-    }
+    
     auto endPop = std::chrono::high_resolution_clock::now();
     auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
     std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
@@ -58,6 +56,11 @@ void testPerformanceForDMassiveFront(int n) {
     TDMassive<T> mas(n);
     std::cout << "TEST FOR DMassive Front " << std::endl;
     std::cout << "Elements " << n << " \n";
+    for (size_t i = 0; i < n; i++)
+    {
+        mas.push_back(i);
+
+    }
 
     auto startPush = std::chrono::high_resolution_clock::now();
 
@@ -94,11 +97,10 @@ void testPerformanceForListFront(int n) {
 
     auto startPush = std::chrono::high_resolution_clock::now();
 
-    for(size_t i = 0; i < n; i++)
-    {
-        l.push_front(i);
+   
+        l.push_front(999);
 
-    }
+    
 
     auto endPush = std::chrono::high_resolution_clock::now();
     auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
@@ -114,11 +116,11 @@ void testPerformanceForListFront(int n) {
     std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
 
     auto startPop = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; ++i)
-    {
+    
+    
         l.pop_front();
 
-    }
+    
     auto endPop = std::chrono::high_resolution_clock::now();
     auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
     std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
@@ -133,14 +135,17 @@ void testPerformanceForList(int n) {
     TList<T> l(n);
     std::cout << "TEST FOR LIST " << std::endl;
     std::cout << "Elements " << n << " \n";
-
-    auto startPush = std::chrono::high_resolution_clock::now();
-   
     for (size_t i = 0; i < n; i++)
     {
         l.push_back(i);
 
     }
+    auto startPush = std::chrono::high_resolution_clock::now();
+   
+    
+        l.push_back(223);
+
+    
   
     auto endPush = std::chrono::high_resolution_clock::now();
     auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
@@ -149,16 +154,15 @@ void testPerformanceForList(int n) {
     size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
     std::cout << "Memory used: " << memoryUsed << " bytes\n";
     
-   /* auto startPop = std::chrono::high_resolution_clock::now();
-    for (size_t i = 0; i < n; ++i)
-    {
+    auto startPop = std::chrono::high_resolution_clock::now();
+    
         l.pop_back();
 
-    }
+    
     auto endPop = std::chrono::high_resolution_clock::now();
     auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
     std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-    */
+    
     auto startFind = std::chrono::high_resolution_clock::now();
     l.find(999);
     auto endFind = std::chrono::high_resolution_clock::now();
@@ -239,21 +243,22 @@ int main() {
 //testPerformanceForDMassiveFRONTPOP<int>(1000000);
 
 testPerformanceForDMassiveFront<int>(100);
-testPerformanceForDMassiveFront<int>(1000);
 testPerformanceForDMassiveFront<int>(10000);
 testPerformanceForDMassiveFront<int>(100000);
+testPerformanceForDMassiveFront<int>(1000000);
+testPerformanceForDMassiveFront<int>(1000000);
 
 
-//testPerformanceForListFront<int>(100000);
-//testPerformanceForListFront<int>(1000000);
-//testPerformanceForListFront<int>(10000000);
-//
-//testPerformanceForList<int>(100);
-//testPerformanceForList<int>(1000);
-//testPerformanceForList<int>(10000);
-//testPerformanceForList<int>(100000);
-//testPerformanceForList<int>(1000000);
-//testPerformanceForList<int>(10000000);
+testPerformanceForListFront<int>(100000);
+testPerformanceForListFront<int>(1000000);
+testPerformanceForListFront<int>(10000000);
+
+testPerformanceForList<int>(100);
+testPerformanceForList<int>(1000);
+testPerformanceForList<int>(10000);
+testPerformanceForList<int>(100000);
+testPerformanceForList<int>(1000000);
+testPerformanceForList<int>(10000000);
 //      
 testPerformanceForTL<int>(100000);
 testPerformanceForTL<int>(1000000);
