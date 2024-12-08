@@ -173,3 +173,48 @@ TEST(TestListsLib, errays) {
 	EXPECT_EQ(list.get_size(), 2);
 	EXPECT_EQ(list._tail->value(), 6);
 }
+
+TEST(TListIteratorTest, IterateThroughList) {
+	TList<int> list;
+	list.push_back(1);
+	list.push_back(2);
+	list.push_back(3);
+
+	auto it = list.begin();
+	EXPECT_EQ(*it, 1);
+	++it;
+	EXPECT_EQ(*it, 2);
+	++it;
+	EXPECT_EQ(*it, 3);
+	++it;
+	EXPECT_EQ(it, list.end());
+}
+
+TEST(TListIteratorTest, OutOfBounds) {
+	TList<int> list;
+	auto it = list.begin();
+	EXPECT_THROW(*it, std::logic_error);
+}
+
+TEST(TListIteratorTest, PostfixIncrement) {
+	TList<int> list;
+	list.push_back(1);
+	list.push_back(2);
+
+	auto it = list.begin();
+	auto old_it = it++;
+	EXPECT_EQ(*old_it, 1);
+	EXPECT_EQ(*it, 2);
+}
+
+TEST(TListIteratorTest, CompareIterators) {
+	TList<int> list;
+	list.push_back(1);
+
+	auto it1 = list.begin();
+	auto it2 = list.end();
+
+	EXPECT_NE(it1, it2);
+	++it1;
+	EXPECT_EQ(it1, it2);
+}

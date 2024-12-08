@@ -4,12 +4,14 @@
 
 template <class T>
 class TList {
+private:
+    class TIterator;
 public:
     TList();
     TList(const TList<T>& list);
     TList(size_t size);
     ~TList();
-    //typedef  TIterator<T> iterator;
+    typedef  TIterator iterator;
     void push_front(const T& value) noexcept;
     void push_back(const T& value) noexcept;
     void insert(const TNode<T>* node, T value);
@@ -25,59 +27,58 @@ public:
     void replace(size_t pos, const T& value);
     bool hasCycle() const noexcept;
     bool reverse() noexcept;
-    /*using iterator = TIterator<T>;*/
+    TIterator begin() {
+        return TIterator(_head);
+    }
+    TIterator end() {
+        return TIterator(nullptr);
+    }
+ 
     TNode<T>* _head;
     TNode<T>* _tail;
 
-    //private:
+    private:
+        class TIterator {
+            TNode<T>* _pcur;
 
-        /*  class TIterator {
-              TNode<T>* _pcur;
+        public:
+            TIterator(TNode<T>* cur) : _pcur(cur) {}
 
-          public:
-              TIterator() : _pcur(nullptr) {}
+            TIterator& operator++() {
+                if (_pcur) {
+                    _pcur = _pcur->next();
+                }
+                return *this;
+            }
 
+            TIterator operator++(int) {
+                TIterator temp(*this);
+                ++(*this);
+                return temp;
+            }
 
-              TIterator(TNode<T>* node) : _pcur(node) {}
+            T operator*() {
+                if (!_pcur) {
+                    throw std::logic_error("Iterator out of bounds");
+                }
+                return _pcur->value();
+            }
 
+            T& operator*() const {
+                if (!_pcur) {
+                    throw std::logic_error("Iterator out of bounds");
+                }
+                return _pcur->value();
+            }
 
-              TIterator(const TIterator<T>& iterator) : _pcur(iterator._pcur) {}
+            bool operator!=(const TIterator& iter) const noexcept {
+                return _pcur != iter._pcur;
+            }
 
-
-              TIterator<T>& operator++() {
-                  if (_pcur) {
-                      _pcur = _pcur->next();
-                  }
-                  return *this;
-              }
-
-
-              TIterator<T> operator++(int) {
-                  TIterator<T> temp(*this);
-                  if (_pcur) {
-                      _pcur = _pcur->next();
-                  }
-                  return temp;
-              }
-
-
-              T& operator*() const {
-                  if (!_pcur) {
-                      throw std::logic_error("Iterator out of bounds");
-                  }
-                  return _pcur->value();
-              }
-
-
-              bool operator==(const TIterator<T>& other) const {
-                  return _pcur == other._pcur;
-              }
-
-              bool operator!=(const TIterator<T>& other) const {
-                  return _pcur != other._pcur;
-              }
-          };
-      };*/
+            bool operator==(const TIterator& iter) const noexcept {
+                return _pcur == iter._pcur;
+            }
+        };
 };
     template <class T>
     TList<T>::TList() : _head(nullptr), _tail(nullptr) {}

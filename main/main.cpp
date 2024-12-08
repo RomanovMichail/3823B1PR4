@@ -18,7 +18,7 @@ void testPerformanceForDMassiveEdinichSl(int n) {
     std::cout << "Elements " << n << " \n";
     auto startPush = std::chrono::high_resolution_clock::now();
    
-        mas.push_back(i);
+        mas.push_back(522);
 
     
      
@@ -31,11 +31,11 @@ void testPerformanceForDMassiveEdinichSl(int n) {
 
    
 
-    auto startFind = std::chrono::high_resolution_clock::now();
+   /* auto startFind = std::chrono::high_resolution_clock::now();
     mas.find_all(5222);
     auto endFind = std::chrono::high_resolution_clock::now();
     auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
-    std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
+    std::cout << "Find time: " << durationFind.count() << " milliseconds\n*//*";*/
    
     auto startPop = std::chrono::high_resolution_clock::now();
   
@@ -143,7 +143,7 @@ void testPerformanceForList(int n) {
     auto startPush = std::chrono::high_resolution_clock::now();
    
     
-        l.push_back(223);
+        l.push_back(999);
 
     
   
@@ -242,32 +242,32 @@ int main() {
 //testPerformanceForDMassiveFRONTPOP<int>(100000);
 //testPerformanceForDMassiveFRONTPOP<int>(1000000);
 
-testPerformanceForDMassiveFront<int>(100);
-testPerformanceForDMassiveFront<int>(10000);
-testPerformanceForDMassiveFront<int>(100000);
-testPerformanceForDMassiveFront<int>(1000000);
-testPerformanceForDMassiveFront<int>(1000000);
 
+//testPerformanceForDMassiveFront<int>(1000000);
+//testPerformanceForDMassiveFront<int>(10000000);
+//testPerformanceForDMassiveFront<int>(100000000);
+//
+//
+//testPerformanceForListFront<int>(100000);
+//testPerformanceForListFront<int>(1000000);
+//testPerformanceForListFront<int>(10000000);
 
-testPerformanceForListFront<int>(100000);
-testPerformanceForListFront<int>(1000000);
-testPerformanceForListFront<int>(10000000);
-
-testPerformanceForList<int>(100);
-testPerformanceForList<int>(1000);
-testPerformanceForList<int>(10000);
-testPerformanceForList<int>(100000);
-testPerformanceForList<int>(1000000);
-testPerformanceForList<int>(10000000);
+//testPerformanceForList<int>(100);
+//testPerformanceForList<int>(1000);
+//testPerformanceForList<int>(10000);
+//testPerformanceForList<int>(100000);
+//testPerformanceForList<int>(1000000);
+//testPerformanceForList<int>(10000000);
+testPerformanceForList<int>(100000000);
 //      
-testPerformanceForTL<int>(100000);
-testPerformanceForTL<int>(1000000);
-testPerformanceForTL<int>(10000000);
-
-testPerformanceForDM<int>(100000);
-testPerformanceForDM<int>(1000000);
-testPerformanceForDM<int>(10000000);
-testPerformanceForDM<int>(100000000);
+//testPerformanceForTL<int>(100000);
+//testPerformanceForTL<int>(1000000);
+//testPerformanceForTL<int>(10000000);
+//
+//testPerformanceForDM<int>(100000);
+//testPerformanceForDM<int>(1000000);
+//testPerformanceForDM<int>(10000000);
+//testPerformanceForDM<int>(100000000);
 
    
  
