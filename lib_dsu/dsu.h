@@ -33,7 +33,7 @@ DSU::~DSU() {
 void DSU::make_set(int elem) {
     if (elem >= parent.size()) {
         throw std::out_of_range("Element out of range");
-    }
+    }   
     parent.replace(elem, elem);  
     rank.replace(elem, 0);        
 }
@@ -64,4 +64,8 @@ void DSU::union_sets(int elem1, int elem2) {
             rank.replace(root1, rank.data()[root1] + 1);
         }
     }
+}
+void DSU::clear() {
+    parent.clear();
+    rank.clear();
 }
