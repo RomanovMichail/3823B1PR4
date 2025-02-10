@@ -174,6 +174,11 @@ TEST(TestListsLib, errays) {
 	EXPECT_EQ(list._tail->value(), 6);
 }
 
+TEST(TListIteratorTest, EmptyListBeginEnd) {
+	TList<int> list;
+	EXPECT_EQ(list.begin(), list.end());
+}
+	
 TEST(TListIteratorTest, IterateThroughList) {
 	TList<int> list;
 	list.push_back(1);
