@@ -1,11 +1,13 @@
+#include "iostream"
 #pragma once
-#include"iostream"
-#include"../lib_list/List.h"
 
 template <class Tkey, class Tval>
 class ITable {
-    virtual Tkey insert(Tval value);
-    virtual void insert(Tkey key, Tval value);
-    virtual void erase(Tkey key);
-    virtual find(Tkey key);
+public:
+    virtual Tkey insert(Tval value) = 0;
+    virtual void insert(Tkey key, Tval value) = 0;
+    virtual void erase(Tkey key) = 0;
+    virtual Tval find(Tkey key) = 0;
+    virtual const Tval& operator[](const Tkey key) const = 0;
+    virtual Tval& operator[](const Tkey key) = 0;
 };
