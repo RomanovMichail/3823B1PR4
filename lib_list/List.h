@@ -27,10 +27,10 @@ public:
     void replace(size_t pos, const T& value);
     bool hasCycle() const noexcept;
     bool reverse() noexcept;
-    TIterator begin() {
+    TIterator begin() const {
         return TIterator(_head);
     }
-    TIterator end() {
+    TIterator end() const {
         return TIterator(nullptr);
     }
  
@@ -78,6 +78,7 @@ public:
             bool operator==(const TIterator& iter) const noexcept {
                 return _pcur == iter._pcur;
             }
+            TNode<T>* get_node() const { return _pcur; }
         };
 };
     template <class T>
