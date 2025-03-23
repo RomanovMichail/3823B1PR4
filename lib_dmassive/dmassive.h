@@ -55,7 +55,7 @@ public:
     TDMassive& remove_last(T value);
     TDMassive& remove_by_index(size_t pos);
     size_t* find_all(T value) const noexcept;
-    size_t find_first(T value);
+    size_t find_first(T value) const;
     size_t find_last(T value);
 private:
     size_t count_value(T value) const;
@@ -338,7 +338,7 @@ TDMassive<T>& TDMassive<T>::remove_by_index(size_t pos) {
 
 
 template <typename T>
-size_t TDMassive<T>::find_first(T value) {
+size_t TDMassive<T>::find_first(T value) const {
     for (size_t i = 0; i < _size; i++) {
         if (_data[i] == value && _states[i] == State::busy) {
             return i;

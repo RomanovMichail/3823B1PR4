@@ -10,6 +10,7 @@
 #include"..\lib_list\List.h"
 #include "..\lib_stack_tl\StackTL.h"
 #include "..\lib_stack_dm\StackDM.h"
+#include "../lib_tbinsearchtree/tbinsearchtree.h"
 
 template <typename T>
 void testPerformanceForDMassiveEdinichSl(int n) {
@@ -258,7 +259,7 @@ int main() {
 //testPerformanceForList<int>(100000);
 //testPerformanceForList<int>(1000000);
 //testPerformanceForList<int>(10000000);
-testPerformanceForList<int>(100000000);
+//testPerformanceForList<int>(100000000);
 //      
 //testPerformanceForTL<int>(100000);
 //testPerformanceForTL<int>(1000000);
@@ -269,7 +270,16 @@ testPerformanceForList<int>(100000000);
 //testPerformanceForDM<int>(10000000);
 //testPerformanceForDM<int>(100000000);
 
-   
+    BTree<int> tree;
+    tree.insert(10);
+    tree.insert(5);
+    tree.insert(15);
+    tree.insert(3);
+    tree.insert(7);
+    tree.insert(13);
+    tree.insert(17);
+
+    tree.print();
  
     return 0;
 }

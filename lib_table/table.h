@@ -4,20 +4,14 @@
 #include"../lib_pair/pair.h"
 #include"string.h"
 #include"../lib_itable/Itable.h"
-
-template <typename Tkey, typename Tval, std::enable_if_t<std::is_arithmetic<Tkey>::value, int> = 0>
-void generate_key(Tkey& key, const Tval& val, size_t size) {
-    if constexpr (std::is_arithmetic<Tval>::value) {
-        key = static_cast<Tkey>(val) + static_cast<Tkey>(size);
-    }
-    else {
-        throw std::invalid_argument("Cannot generate key: incompatible types.");
-    }
+template <class Tkey>
+void generate_key(Tkey& key, int val, size_t size) {
+    key = val + size;
 }
 
-template <typename Tkey, typename Tval, std::enable_if_t<std::is_same<Tkey, std::string>::value, int> = 0>
-void generate_key(Tkey& key, const Tval& val, size_t size) {
-    key = val + std::to_string(size);
+template <class Tkey>
+void generate_key(Tkey& key, std::string val, size_t size) {
+    key = val + char(size);
 }
 
 template <class Tkey, class Tval>
