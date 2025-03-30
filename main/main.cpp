@@ -11,6 +11,25 @@
 #include "..\lib_stack_tl\StackTL.h"
 #include "..\lib_stack_dm\StackDM.h"
 #include "../lib_tbinsearchtree/tbinsearchtree.h"
+#include"../lib_minheap/MinHeap.h"
+template <class TVal>
+void sort_k_sorted_array(TVal* arr, size_t n, size_t k) {
+    MinHeap<TVal> minHeap(k + 1); 
+    size_t index = 0;
+
+    for (size_t i = 0; i <= k && i < n; i++) {
+        minHeap.insert(arr[i]);
+    }
+ 
+    for (size_t i = k + 1; i < n; i++) {
+        arr[index++] = minHeap.remove_min();  
+        minHeap.insert(arr[i]);
+    }
+
+    while (!minHeap.is_empty()) {
+        arr[index++] = minHeap.remove_min();
+    }
+}
 
 template <typename T>
 void testPerformanceForDMassiveEdinichSl(int n) {
@@ -269,18 +288,20 @@ int main() {
 //testPerformanceForDM<int>(1000000);
 //testPerformanceForDM<int>(10000000);
 //testPerformanceForDM<int>(100000000);
+    const size_t n = 7;
+    int mass[n] = { 6, 5, 3, 2, 8, 10, 9 };
+    size_t k = 3;
 
-    BTree<int> tree;
-    tree.insert(10);
-    tree.insert(5);
-    tree.insert(15);
-    tree.insert(3);
-    tree.insert(7);
-    tree.insert(13);
-    tree.insert(17);
+    sort_k_sorted_array(mass, n, k);
 
-    tree.print();
- 
+    std::cout << "sorted massive: ";
+    for (size_t i = 0; i < n; ++i) {
+        std::cout << mass[i] << " ";
+    }
+    std::cout << std::endl;
+
     return 0;
+  
+
 }
 #endif
