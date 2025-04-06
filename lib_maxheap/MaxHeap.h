@@ -1,4 +1,4 @@
-#include"../lib_dmassive/dmassive.h"
+
 #include <iostream>
 #include <stdexcept>
 #pragma once
@@ -33,7 +33,7 @@ MaxHeap<TVal>::MaxHeap(size_t size) : _capacity(size), _size(0) {
 }
 template <class TVal>
 MaxHeap<TVal>::MaxHeap(size_t size, const TVal* arr) : _capacity(size), _size(size) {
-    _data = new TVal[_capacity];
+    _data = new TVal[_capacity];    
     for (size_t i = 0; i < _size; i++) {
         _data[i] = arr[i];
     }

@@ -14,7 +14,7 @@ class TPair {
     T1 _first;
     T2 _second;
 public:
-    TPair() : _first(0), _second(0) { }
+    TPair() : _first(), _second() { }
     TPair(const T1& first, const T2& second) : _first(first), _second(second) { }
     TPair(const TPair& pair) : _first(pair._first), _second(pair._second) { }
     ~TPair() { }

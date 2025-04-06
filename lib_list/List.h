@@ -226,17 +226,19 @@ public:
         }
 
         TNode<T>* current = _head;
-        while (current->next() != node) {
+        while (current != nullptr && current->next() != node) {
             current = current->next();
         }
 
-        if (current->next() == node) {
-            current->next(node->next());
-            if (node == _tail) {
-                _tail = current;
-            }
-            delete node;
+        if (current == nullptr || current->next() != node) {
+            throw std::logic_error("Node not found in list");
         }
+
+        current->next(node->next());
+        if (node == _tail) {
+            _tail = current;
+        }
+        delete node;
     }
     template <class T>
     void TList<T>::erase(size_t pos) {
