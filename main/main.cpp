@@ -5,6 +5,9 @@
 #include <iostream>
 #include <iomanip>
 #include <chrono>
+#include <vector>
+#include <random>
+#include <algorithm>
 #include "../lib_easy_example/easy_example.h"
 #include "../lib_dmassive/dmassive.h"
 #include"..\lib_list\List.h"
@@ -12,24 +15,8 @@
 #include "..\lib_stack_dm\StackDM.h"
 #include "../lib_tbinsearchtree/tbinsearchtree.h"
 #include"../lib_minheap/MinHeap.h"
-template <class TVal>
-void sort_k_sorted_array(TVal* arr, size_t n, size_t k) {
-    MinHeap<TVal> minHeap(k + 1); 
-    size_t index = 0;
+#include"../lib_dsu/dsu.h"
 
-    for (size_t i = 0; i <= k && i < n; i++) {
-        minHeap.insert(arr[i]);
-    }
- 
-    for (size_t i = k + 1; i < n; i++) {
-        arr[index++] = minHeap.remove_min();  
-        minHeap.insert(arr[i]);
-    }
-
-    while (!minHeap.is_empty()) {
-        arr[index++] = minHeap.remove_min();
-    }
-}
 
 template <typename T>
 void testPerformanceForDMassiveEdinichSl(int n) {
@@ -253,52 +240,82 @@ void testPerformanceForDM(int n) {
     std::cout << "-----------------------------------\n";
 }
 
-int main() {
-//testPerformanceForDMassiveEdinichSl<int>(1000000);
-//testPerformanceForDMassiveEdinichSl<int>(10000000);
-//testPerformanceForDMassiveEdinichSl<int>(100000000);
 
-//testPerformanceForDMassiveFRONTPOP<int>(10000);
-//testPerformanceForDMassiveFRONTPOP<int>(100000);
-//testPerformanceForDMassiveFRONTPOP<int>(1000000);
+int get_random(int min, int max) {
+    return min + rand() % (max - min + 1);
+}
 
+void print_maze(const TDMassive<int>& maze, size_t height, size_t width) {
+    int max_num = *std::max_element(maze.data(), maze.data() + maze.size());
+    int cell_width = std::to_string(max_num).length() + 1;
 
-//testPerformanceForDMassiveFront<int>(1000000);
-//testPerformanceForDMassiveFront<int>(10000000);
-//testPerformanceForDMassiveFront<int>(100000000);
-//
-//
-//testPerformanceForListFront<int>(100000);
-//testPerformanceForListFront<int>(1000000);
-//testPerformanceForListFront<int>(10000000);
+    std::cout << std::string(width * (cell_width + 1) + 1, '-') << std::endl;
 
-//testPerformanceForList<int>(100);
-//testPerformanceForList<int>(1000);
-//testPerformanceForList<int>(10000);
-//testPerformanceForList<int>(100000);
-//testPerformanceForList<int>(1000000);
-//testPerformanceForList<int>(10000000);
-//testPerformanceForList<int>(100000000);
-//      
-//testPerformanceForTL<int>(100000);
-//testPerformanceForTL<int>(1000000);
-//testPerformanceForTL<int>(10000000);
-//
-//testPerformanceForDM<int>(100000);
-//testPerformanceForDM<int>(1000000);
-//testPerformanceForDM<int>(10000000);
-//testPerformanceForDM<int>(100000000);
-    const size_t n = 7;
-    int mass[n] = { 6, 5, 3, 2, 8, 10, 9 };
-    size_t k = 3;
-
-    sort_k_sorted_array(mass, n, k);
-
-    std::cout << "sorted massive: ";
-    for (size_t i = 0; i < n; ++i) {
-        std::cout << mass[i] << " ";
+    for (size_t i = 0; i < height; ++i) {
+        std::cout << "|";
+        for (size_t j = 0; j < width; ++j) {
+            size_t index = i * width + j;
+            std::cout << std::string(cell_width - std::to_string(maze.data()[index]).length(), ' ');
+            std::cout << maze.data()[index] << "|";
+        }
+        std::cout << std::endl;
+        std::cout << std::string(width * (cell_width + 1) + 1, '-') << std::endl;
     }
-    std::cout << std::endl;
+}
+
+
+void generate_maze(size_t height, size_t width) {
+    size_t size = height * width;
+    TDMassive<int> maze(size);
+    DSU dsu(size);
+
+    for (size_t i = 0; i < size; ++i) {
+        maze.replace(i, i + 1); 
+    }
+    srand(time(nullptr));
+    size_t walls_to_remove = size - 1; 
+
+    while (walls_to_remove > 0) {
+        size_t cell = get_random(0, size - 1);
+        int direction = get_random(0, 3); 
+
+        size_t neighbor = cell;
+
+        switch (direction) {
+        case 0:
+            if (cell >= width) neighbor = cell - width;
+            break;
+        case 1: 
+            if ((cell + 1) % width != 0) neighbor = cell + 1;
+            break;
+        case 2: 
+            if (cell < size - width) neighbor = cell + width;
+            break;
+        case 3: 
+            if (cell % width != 0) neighbor = cell - 1;
+            break;
+        }
+
+        if (neighbor != cell && dsu.find(cell) != dsu.find(neighbor)) {
+            dsu.union_sets(cell, neighbor);
+            walls_to_remove--;
+
+            int root = dsu.find(cell);
+            maze.replace(cell, root + 1);
+            maze.replace(neighbor, root + 1);
+        }
+    }
+
+    std::cout << "\nGenerated maze:" << std::endl;
+    print_maze(maze, height, width);
+
+}   
+int main() {
+
+    size_t height = 5;
+    size_t width = 5;
+
+    generate_maze(height, width);
 
     return 0;
   
