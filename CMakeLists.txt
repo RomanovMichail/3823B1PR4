@@ -30,6 +30,9 @@ add_subdirectory(lib_sortedTable)
 add_subdirectory(lib_tbinsearchtree)
 add_subdirectory(lib_maxheap)
 add_subdirectory(lib_minheap)
+add_subdirectory(lib_hashtablec)
+add_subdirectory(lib_hashtableos)
+add_subdirectory(lib_rbtree)
 add_subdirectory(main)                # подключаем дополнительный CMakeLists.txt из подкаталога с именем main
 
 option(BTEST "build test?" ON)        # указываем подключаем ли google-тесты (ON или YES) или нет (OFF или NO)

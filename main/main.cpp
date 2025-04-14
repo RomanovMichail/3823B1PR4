@@ -16,6 +16,7 @@
 #include "../lib_tbinsearchtree/tbinsearchtree.h"
 #include"../lib_minheap/MinHeap.h"
 #include"../lib_dsu/dsu.h"
+#include"../lib_rbtree/RBTree.h"
 
 
 template <typename T>
@@ -315,10 +316,14 @@ int main() {
     size_t height = 5;
     size_t width = 5;
 
-    generate_maze(height, width);
+   /* generate_maze(height, width);*/
 
+   
+    RBTree<int> tree;
+    tree.insert(10);
+    tree.insert(20);
+    tree.insert(5);
+    tree.print();
     return 0;
-  
-
 }
 #endif

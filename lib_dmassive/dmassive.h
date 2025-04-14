@@ -57,6 +57,32 @@ public:
     size_t* find_all(T value) const noexcept;
     size_t find_first(T value) const;
     size_t find_last(T value);
+
+
+
+
+    T& operator[](size_t index) {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _data[index];
+    }
+    const T& operator[](size_t index) const {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _data[index];
+    }
+
+    // Геттеры для доступа к состоянию ячейки
+    State& getState(size_t index) {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _states[index];
+    }
+    const State& getState(size_t index) const {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _states[index];
+    }
 private:
     size_t count_value(T value) const;
 };
