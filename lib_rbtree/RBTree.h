@@ -13,10 +13,13 @@ class RBTree {
     void rotateLeft(RBTreeNode<T>* x);
     void rotateRight(RBTreeNode<T>* y);
     void fixInsertion(RBTreeNode<T>* z);
-
+    void transplant(RBTreeNode<T>* u, RBTreeNode<T>* v);
+    void fixAfterErase(RBTreeNode<T>* x);
+    RBTreeNode<T>* minimum(RBTreeNode<T>* node);
 public:
     RBTree() : _root(nullptr), _size(0) {}
     RBTreeNode<T>* insert(T val);
+    void erase(T val);
     RBTreeNode<T>* search(T val) const noexcept;
     void print() const;
     size_t size() const noexcept { return _size; }
@@ -63,7 +66,7 @@ RBTreeNode<T>* RBTree<T>::insert(T val) {
 
 template <class T>
 void RBTree<T>::fixInsertion(RBTreeNode<T>* z) {
-    while (z->parent() != nullptr && z->parent()->color()) {
+    while (z != _root && z->parent()->color()) {
         RBTreeNode<T>* grandparent = z->parent()->parent();
         if (grandparent == nullptr) break;
 
@@ -77,41 +80,41 @@ void RBTree<T>::fixInsertion(RBTreeNode<T>* z) {
             z = grandparent;
         }
         else {
-            if (parentIsLeft != (z == (parentIsLeft ? z->parent()->left() : z->parent()->right()))) {
-                if (parentIsLeft)
-                    rotateRight(z->parent());
-                else
-                    rotateLeft(z->parent());
-                    z = parentIsLeft ? z->right() : z->left();
+       
+            if ((parentIsLeft && z == z->parent()->right()) || (!parentIsLeft && z == z->parent()->left())) {
+                z = z->parent();
+                parentIsLeft ? rotateLeft(z) : rotateRight(z);
             }
 
             z->parent()->color(false);
-                grandparent->color(true);
-                if (parentIsLeft)
-                    rotateRight(grandparent);
-                else
-                    rotateLeft(grandparent);
+            grandparent->color(true);
+            parentIsLeft ? rotateRight(grandparent) : rotateLeft(grandparent);
         }
     }
-    _root->color(false); 
+    _root->color(false);
 }
-
 template <class T>
 void RBTree<T>::rotateLeft(RBTreeNode<T>* x) {
+    if (x == nullptr || x->right() == nullptr) return;
+
     RBTreeNode<T>* y = x->right();
     x->right(y->left());
 
-    if (y->left() != nullptr)
+    if (y->left() != nullptr) {
         y->left()->parent(x);
+    }
 
     y->parent(x->parent());
 
-    if (x->parent() == nullptr)
+    if (x->parent() == nullptr) {
         _root = y;
-    else if (x == x->parent()->left())
+    }
+    else if (x == x->parent()->left()) {
         x->parent()->left(y);
-    else
+    }
+    else {
         x->parent()->right(y);
+    }
 
     y->left(x);
     x->parent(y);
@@ -119,20 +122,26 @@ void RBTree<T>::rotateLeft(RBTreeNode<T>* x) {
 
 template <class T>
 void RBTree<T>::rotateRight(RBTreeNode<T>* y) {
+    if (y == nullptr || y->left() == nullptr) return;
+
     RBTreeNode<T>* x = y->left();
     y->left(x->right());
 
-    if (x->right() != nullptr)
+    if (x->right() != nullptr) {
         x->right()->parent(y);
+    }
 
     x->parent(y->parent());
 
-    if (y->parent() == nullptr)
+    if (y->parent() == nullptr) {
         _root = x;
-    else if (y == y->parent()->right())
+    }
+    else if (y == y->parent()->right()) {
         y->parent()->right(x);
-    else
+    }
+    else {
         y->parent()->left(x);
+    }
 
     x->right(y);
     y->parent(x);
@@ -178,4 +187,150 @@ void RBTree<T>::print(RBTreeNode<T>* node, int indent) const {
             print(node->left(), indent + 8);
         }
     }
+}//картинки, цвета - изменить на дефайн, чтобы просто вставляло каждый раз при выводе
+
+
+template <class T>
+void RBTree<T>::erase(T val) {
+    RBTreeNode<T>* z = search(val);
+    if (!z) return;
+
+    RBTreeNode<T>* y = z;
+    bool yOriginalColor = y->color();
+    RBTreeNode<T>* x = nullptr;
+
+    if (z->left() == nullptr) {
+        x = z->right();
+        transplant(z, z->right());
+    }
+    else if (z->right() == nullptr) {
+        x = z->left();
+        transplant(z, z->left());
+    }
+    else {
+        y = minimum(z->right());
+        yOriginalColor = y->color();
+        x = y->right();
+        if (y->parent() == z) {
+            if (x) x->parent(y);
+        }
+        else {
+            transplant(y, y->right());
+            y->right(z->right());
+            y->right()->parent(y);
+        }
+        transplant(z, y);
+        y->left(z->left());
+        y->left()->parent(y);
+        y->color(z->color());
+    }
+
+    delete z;
+    _size--;
+
+    if (yOriginalColor == false && x) {
+        fixAfterErase(x);
+    }
+}
+
+template <class T>
+void RBTree<T>::transplant(RBTreeNode<T>* u, RBTreeNode<T>* v) {
+    if (u->parent() == nullptr) {
+        _root = v;
+    }
+    else if (u == u->parent()->left()) {
+        u->parent()->left(v);
+    }
+    else {
+        u->parent()->right(v);
+    }
+    if (v) v->parent(u->parent());
+}
+
+template <class T>
+RBTreeNode<T>* RBTree<T>::minimum(RBTreeNode<T>* node) {
+    while (node->left() != nullptr) {
+        node = node->left();
+    }
+    return node;
+}
+
+template <class T>
+void RBTree<T>::fixAfterErase(RBTreeNode<T>* x) {
+    while (x != _root && (x == nullptr || x->color() == false)) {
+        if (x == x->parent()->left()) {
+            RBTreeNode<T>* s = x->parent()->right();
+
+            if (s != nullptr && s->color()) {
+                s->color(false);
+                x->parent()->color(true);
+                rotateLeft(x->parent());
+                s = x->parent()->right();
+                if (s == nullptr) break;
+            }
+
+            if (s == nullptr) break; 
+
+            bool leftBlack = (s->left() == nullptr || !s->left()->color());
+            bool rightBlack = (s->right() == nullptr || !s->right()->color());
+            if (leftBlack && rightBlack) {
+                s->color(true);
+                x = x->parent();
+            }
+            else {
+
+                if (rightBlack) {
+                    if (s->left() != nullptr) s->left()->color(false);
+                    s->color(true);
+                    rotateRight(s);
+                    s = x->parent()->right();
+                    if (s == nullptr) break;
+                }
+
+
+                s->color(x->parent()->color());
+                x->parent()->color(false);
+                if (s->right() != nullptr) s->right()->color(false);
+                rotateLeft(x->parent());
+                x = _root; 
+            }
+        }
+        else {
+            RBTreeNode<T>* s = x->parent()->left();
+
+            if (s != nullptr && s->color()) {
+                s->color(false);
+                x->parent()->color(true);
+                rotateRight(x->parent());
+                s = x->parent()->left();
+                if (s == nullptr) break;
+            }
+
+            if (s == nullptr) break;
+
+            bool rightBlack = (s->right() == nullptr || !s->right()->color());
+            bool leftBlack = (s->left() == nullptr || !s->left()->color());
+            if (rightBlack && leftBlack) {
+                s->color(true);
+                x = x->parent();
+            }
+            else {
+                if (leftBlack) {
+                    if (s->right() != nullptr) s->right()->color(false);
+                    s->color(true);
+                    rotateLeft(s);
+                    s = x->parent()->left();
+                    if (s == nullptr) break;
+                }
+
+                s->color(x->parent()->color());
+                x->parent()->color(false);
+                if (s->left() != nullptr) s->left()->color(false);
+                rotateRight(x->parent());
+                x = _root;
+            }
+        }
+    }
+
+    if (x != nullptr) x->color(false); 
 }
