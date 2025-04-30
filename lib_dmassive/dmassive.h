@@ -55,8 +55,34 @@ public:
     TDMassive& remove_last(T value);
     TDMassive& remove_by_index(size_t pos);
     size_t* find_all(T value) const noexcept;
-    size_t find_first(T value);
+    size_t find_first(T value) const;
     size_t find_last(T value);
+
+
+
+
+    T& operator[](size_t index) {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _data[index];
+    }
+    const T& operator[](size_t index) const {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _data[index];
+    }
+
+    // Геттеры для доступа к состоянию ячейки
+    State& getState(size_t index) {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _states[index];
+    }
+    const State& getState(size_t index) const {
+        if (index >= _size)
+            throw std::out_of_range("Index out of range");
+        return _states[index];
+    }
 private:
     size_t count_value(T value) const;
 };
@@ -332,13 +358,17 @@ TDMassive<T>& TDMassive<T>::remove_by_index(size_t pos) {
     if (pos >= _size) {
         throw std::out_of_range("Index out of range");
     }
-    _states[pos] = State::deleted;
+
+    for (size_t i = pos; i < _size - 1; ++i) {
+        _data[i] = std::move(_data[i + 1]); 
+    }
+    _size--; 
     return *this;
 }
 
 
 template <typename T>
-size_t TDMassive<T>::find_first(T value) {
+size_t TDMassive<T>::find_first(T value) const {
     for (size_t i = 0; i < _size; i++) {
         if (_data[i] == value && _states[i] == State::busy) {
             return i;

@@ -5,272 +5,374 @@
 #include <iostream>
 #include <iomanip>
 #include <chrono>
+#include <vector>
+#include <random>
+#include <algorithm>
 #include "../lib_easy_example/easy_example.h"
 #include "../lib_dmassive/dmassive.h"
 #include"..\lib_list\List.h"
 #include "..\lib_stack_tl\StackTL.h"
 #include "..\lib_stack_dm\StackDM.h"
+#include "../lib_tbinsearchtree/tbinsearchtree.h"
+#include"../lib_minheap/MinHeap.h"
+#include"../lib_dsu/dsu.h"
+#include"../lib_rbtree/RBTree.h"
 
-template <typename T>
-void testPerformanceForDMassiveEdinichSl(int n) {
-    TDMassive<T> mas;
-    std::cout << "TEST FOR DMassive Edinich " << std::endl;
-    std::cout << "Elements " << n << " \n";
-    auto startPush = std::chrono::high_resolution_clock::now();
-   
-        mas.push_back(522);
 
-    
-     
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//template <typename T>
+//void testPerformanceForDMassiveEdinichSl(int n) {
+//    TDMassive<T> mas;
+//    std::cout << "TEST FOR DMassive Edinich " << std::endl;
+//    std::cout << "Elements " << n << " \n";
+//    auto startPush = std::chrono::high_resolution_clock::now();
+//   
+//        mas.push_back(522);
+//
+//    
+//     
+//    auto endPush = std::chrono::high_resolution_clock::now();
+//    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
+//    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//
+//    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
+//    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+//
+//   
+//
+//   /* auto startFind = std::chrono::high_resolution_clock::now();
+//    mas.find_all(5222);
+//    auto endFind = std::chrono::high_resolution_clock::now();
+//    auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
+//    std::cout << "Find time: " << durationFind.count() << " milliseconds\n*//*";*/
+//   
+//    auto startPop = std::chrono::high_resolution_clock::now();
+//  
+//    mas.pop_back();
+//    
+//    auto endPop = std::chrono::high_resolution_clock::now();
+//    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
+//    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
+//
+//    std::cout << "-----------------------------------\n";
+//
+//}
+//
+//
+//
+//template <typename T>
+//void testPerformanceForDMassiveFront(int n) {
+//    TDMassive<T> mas(n);
+//    std::cout << "TEST FOR DMassive Front " << std::endl;
+//    std::cout << "Elements " << n << " \n";
+//    for (size_t i = 0; i < n; i++)
+//    {
+//        mas.push_back(i);
+//
+//    }
+//
+//    auto startPush = std::chrono::high_resolution_clock::now();
+//
+//    
+//    
+//        mas.push_front(2);
+//
+//    
+//
+//    auto endPush = std::chrono::high_resolution_clock::now();
+//    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
+//    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//
+//    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
+//    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+//
+//    auto startPop = std::chrono::high_resolution_clock::now();
+//   
+//        mas.pop_front();
+//
+//    
+//    auto endPop = std::chrono::high_resolution_clock::now();
+//    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
+//    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
+//
+//    std::cout << "-----------------------------------\n";
+//
+//}
+//template <typename T>
+//void testPerformanceForListFront(int n) {
+//    TList<T> l(n);
+//    std::cout << "TEST FOR LIST Front" << std::endl;
+//    std::cout << "Elements " << n << " \n";
+//
+//    auto startPush = std::chrono::high_resolution_clock::now();
+//
+//   
+//        l.push_front(999);
+//
+//    
+//
+//    auto endPush = std::chrono::high_resolution_clock::now();
+//    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
+//    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//
+//    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
+//    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+//
+//    auto startFind = std::chrono::high_resolution_clock::now();
+//    l.find(999);
+//    auto endFind = std::chrono::high_resolution_clock::now();
+//    auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
+//    std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
+//
+//    auto startPop = std::chrono::high_resolution_clock::now();
+//    
+//    
+//        l.pop_front();
+//
+//    
+//    auto endPop = std::chrono::high_resolution_clock::now();
+//    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
+//    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
+//
+//
+//    std::cout << "-----------------------------------\n";
+//
+//}
+//
+//template <typename T>
+//void testPerformanceForList(int n) {
+//    TList<T> l(n);
+//    std::cout << "TEST FOR LIST " << std::endl;
+//    std::cout << "Elements " << n << " \n";
+//    for (size_t i = 0; i < n; i++)
+//    {
+//        l.push_back(i);
+//
+//    }
+//    auto startPush = std::chrono::high_resolution_clock::now();
+//   
+//    
+//        l.push_back(999);
+//
+//    
+//  
+//    auto endPush = std::chrono::high_resolution_clock::now();
+//    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
+//    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//
+//    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
+//    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+//    
+//    auto startPop = std::chrono::high_resolution_clock::now();
+//    
+//        l.pop_back();
+//
+//    
+//    auto endPop = std::chrono::high_resolution_clock::now();
+//    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
+//    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
+//    
+//    auto startFind = std::chrono::high_resolution_clock::now();
+//    l.find(999);
+//    auto endFind = std::chrono::high_resolution_clock::now();
+//    auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
+//    std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
+//
+//
+//    std::cout << "-----------------------------------\n";
+//
+//}
+//
+//template <typename T>
+//void testPerformanceForTL(int n) {
+//    TStackTL<T> stack(n);
+//    std::cout << "TEST FOR STACK TL " << std::endl;
+//    std::cout << "Elements " << n << " \n";
+//
+//    auto startPush = std::chrono::high_resolution_clock::now();
+//    
+//        stack.push(52);
+//    
+//    auto endPush = std::chrono::high_resolution_clock::now();
+//    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
+//    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//
+//    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
+//    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+//
+//    auto startPop = std::chrono::high_resolution_clock::now();
+// 
+//        stack.pop();
+//  
+//    auto endPop = std::chrono::high_resolution_clock::now();
+//    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
+//    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
+//
+//    std::cout << "-----------------------------------\n";
+//
+//}
+//
+//
+//
+//template <typename T>
+//void testPerformanceForDM(int n) {
+//    TStackDM<T> stack(n);
+//    std::cout << "TEST FOR STACK DM " << std::endl;
+//    std::cout << "Elements " << n << " \n";
+//
+//    auto startPush = std::chrono::high_resolution_clock::now();
+//    
+//        stack.push(52);
+// 
+//    auto endPush = std::chrono::high_resolution_clock::now();
+//    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
+//    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
+//
+//    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
+//    std::cout << "Memory used: " << memoryUsed << " bytes\n";
+//
+//    auto startPop = std::chrono::high_resolution_clock::now();
+//   
+//        stack.pop();
+//
+//    auto endPop = std::chrono::high_resolution_clock::now();
+//    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
+//    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
+//
+//    std::cout << "-----------------------------------\n";
+//}
 
-    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
-    std::cout << "Memory used: " << memoryUsed << " bytes\n";
-
-   
-
-   /* auto startFind = std::chrono::high_resolution_clock::now();
-    mas.find_all(5222);
-    auto endFind = std::chrono::high_resolution_clock::now();
-    auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
-    std::cout << "Find time: " << durationFind.count() << " milliseconds\n*//*";*/
-   
-    auto startPop = std::chrono::high_resolution_clock::now();
-  
-    mas.pop_back();
-    
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-
-    std::cout << "-----------------------------------\n";
-
+int get_random(int min, int max) {
+    return min + rand() % (max - min + 1);
 }
 
+void print_maze(size_t height, size_t width, const TDMassive<bool>& right_walls, const TDMassive<bool>& down_walls) {
 
+    std::cout << "+";
+    for (size_t j = 0; j < width; ++j) {
+        std::cout << "---+";
+    }
+    std::cout << std::endl;
 
-template <typename T>
-void testPerformanceForDMassiveFront(int n) {
-    TDMassive<T> mas(n);
-    std::cout << "TEST FOR DMassive Front " << std::endl;
-    std::cout << "Elements " << n << " \n";
-    for (size_t i = 0; i < n; i++)
-    {
-        mas.push_back(i);
+    for (size_t i = 0; i < height; ++i) {
+        std::cout << "|";
+        for (size_t j = 0; j < width; ++j) {
+            size_t index = i * width + j;
+            std::cout << "   "; 
+            if (j < width - 1) {
+                if (right_walls.data()[index]) {
+                    std::cout << "|";
+                }
+                else {
+                    std::cout << " ";
+                }
+            }
+            else {
+                std::cout << "|"; 
+            }
+        }
+        std::cout << std::endl;
+        std::cout << "+";
+        for (size_t j = 0; j < width; ++j) {
+            size_t index = i * width + j;
+            if (down_walls.data()[index]) {
+                std::cout << "---+";
+            }
+            else {
+                std::cout << "   +";
+            }
+        }
+        std::cout << std::endl;
+    }
+}
 
+void generate_maze(size_t height, size_t width) {
+    size_t size = height * width;
+    DSU dsu(size);
+    TDMassive<bool> right_walls(size, true);
+    TDMassive<bool> down_walls(size, true);
+
+    srand(static_cast<unsigned int>(time(nullptr)));
+    size_t walls_to_remove = size - 1;
+
+    while (walls_to_remove > 0) {
+        size_t cell = get_random(0, size - 1);
+        int direction = get_random(0, 3); 
+
+        size_t neighbor = cell;
+        switch (direction) {
+        case 0:
+            if (cell >= width) neighbor = cell - width;
+            break;
+        case 1:
+            if ((cell + 1) % width != 0) neighbor = cell + 1;
+            break;
+        case 2:
+            if (cell < size - width) neighbor = cell + width;
+            break;
+        case 3:
+            if (cell % width != 0) neighbor = cell - 1;
+            break;
+        }
+
+        if (neighbor != cell && dsu.find(cell) != dsu.find(neighbor)) {
+            dsu.union_sets(cell, neighbor);
+            walls_to_remove--;
+        
+            if (neighbor == cell - width) {
+                down_walls.replace(neighbor, false);
+            }
+            else if (neighbor == cell + 1) {
+                right_walls.replace(cell, false);
+            }
+            else if (neighbor == cell + width) {
+                down_walls.replace(cell, false);
+            }
+            else if (neighbor == cell - 1) {
+                right_walls.replace(neighbor, false);
+            }
+        }
     }
 
-    auto startPush = std::chrono::high_resolution_clock::now();
-
-    
-    
-        mas.push_front(2);
-
-    
-
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
-
-    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
-    std::cout << "Memory used: " << memoryUsed << " bytes\n";
-
-    auto startPop = std::chrono::high_resolution_clock::now();
-   
-        mas.pop_front();
-
-    
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-
-    std::cout << "-----------------------------------\n";
-
-}
-template <typename T>
-void testPerformanceForListFront(int n) {
-    TList<T> l(n);
-    std::cout << "TEST FOR LIST Front" << std::endl;
-    std::cout << "Elements " << n << " \n";
-
-    auto startPush = std::chrono::high_resolution_clock::now();
-
-   
-        l.push_front(999);
-
-    
-
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
-
-    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
-    std::cout << "Memory used: " << memoryUsed << " bytes\n";
-
-    auto startFind = std::chrono::high_resolution_clock::now();
-    l.find(999);
-    auto endFind = std::chrono::high_resolution_clock::now();
-    auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
-    std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
-
-    auto startPop = std::chrono::high_resolution_clock::now();
-    
-    
-        l.pop_front();
-
-    
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-
-
-    std::cout << "-----------------------------------\n";
-
+    std::cout << "\nGenerated maze:" << std::endl;
+    print_maze(height, width, right_walls, down_walls);
 }
 
-template <typename T>
-void testPerformanceForList(int n) {
-    TList<T> l(n);
-    std::cout << "TEST FOR LIST " << std::endl;
-    std::cout << "Elements " << n << " \n";
-    for (size_t i = 0; i < n; i++)
-    {
-        l.push_back(i);
-
-    }
-    auto startPush = std::chrono::high_resolution_clock::now();
-   
-    
-        l.push_back(999);
-
-    
-  
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
-
-    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
-    std::cout << "Memory used: " << memoryUsed << " bytes\n";
-    
-    auto startPop = std::chrono::high_resolution_clock::now();
-    
-        l.pop_back();
-
-    
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-    
-    auto startFind = std::chrono::high_resolution_clock::now();
-    l.find(999);
-    auto endFind = std::chrono::high_resolution_clock::now();
-    auto durationFind = std::chrono::duration_cast<std::chrono::milliseconds>(endFind - startFind);
-    std::cout << "Find time: " << durationFind.count() << " milliseconds\n";
-
-
-    std::cout << "-----------------------------------\n";
-
-}
-
-template <typename T>
-void testPerformanceForTL(int n) {
-    TStackTL<T> stack(n);
-    std::cout << "TEST FOR STACK TL " << std::endl;
-    std::cout << "Elements " << n << " \n";
-
-    auto startPush = std::chrono::high_resolution_clock::now();
-    
-        stack.push(52);
-    
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
-
-    size_t memoryUsed = n * (sizeof(T) + sizeof(TNode<T>));
-    std::cout << "Memory used: " << memoryUsed << " bytes\n";
-
-    auto startPop = std::chrono::high_resolution_clock::now();
- 
-        stack.pop();
-  
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
-
-    std::cout << "-----------------------------------\n";
-
-}
+//Дерево выражений. Подаём выражение и переводим его в дерево и считаем.
 
 
 
-template <typename T>
-void testPerformanceForDM(int n) {
-    TStackDM<T> stack(n);
-    std::cout << "TEST FOR STACK DM " << std::endl;
-    std::cout << "Elements " << n << " \n";
 
-    auto startPush = std::chrono::high_resolution_clock::now();
-    
-        stack.push(52);
- 
-    auto endPush = std::chrono::high_resolution_clock::now();
-    auto durationPush = std::chrono::duration_cast<std::chrono::milliseconds>(endPush - startPush);
-    std::cout << "Push time: " << durationPush.count() << " milliseconds\n";
 
-    size_t memoryUsed = n * (sizeof(T) + sizeof(State));
-    std::cout << "Memory used: " << memoryUsed << " bytes\n";
 
-    auto startPop = std::chrono::high_resolution_clock::now();
-   
-        stack.pop();
 
-    auto endPop = std::chrono::high_resolution_clock::now();
-    auto durationPop = std::chrono::duration_cast<std::chrono::milliseconds>(endPop - startPop);
-    std::cout << "Pop time: " << durationPop.count() << " milliseconds\n";
 
-    std::cout << "-----------------------------------\n";
-}
+
+
+
+
+
 
 int main() {
-//testPerformanceForDMassiveEdinichSl<int>(1000000);
-//testPerformanceForDMassiveEdinichSl<int>(10000000);
-//testPerformanceForDMassiveEdinichSl<int>(100000000);
 
-//testPerformanceForDMassiveFRONTPOP<int>(10000);
-//testPerformanceForDMassiveFRONTPOP<int>(100000);
-//testPerformanceForDMassiveFRONTPOP<int>(1000000);
+    size_t height = 5;
+    size_t width = 5;
 
-
-//testPerformanceForDMassiveFront<int>(1000000);
-//testPerformanceForDMassiveFront<int>(10000000);
-//testPerformanceForDMassiveFront<int>(100000000);
-//
-//
-//testPerformanceForListFront<int>(100000);
-//testPerformanceForListFront<int>(1000000);
-//testPerformanceForListFront<int>(10000000);
-
-//testPerformanceForList<int>(100);
-//testPerformanceForList<int>(1000);
-//testPerformanceForList<int>(10000);
-//testPerformanceForList<int>(100000);
-//testPerformanceForList<int>(1000000);
-//testPerformanceForList<int>(10000000);
-testPerformanceForList<int>(100000000);
-//      
-//testPerformanceForTL<int>(100000);
-//testPerformanceForTL<int>(1000000);
-//testPerformanceForTL<int>(10000000);
-//
-//testPerformanceForDM<int>(100000);
-//testPerformanceForDM<int>(1000000);
-//testPerformanceForDM<int>(10000000);
-//testPerformanceForDM<int>(100000000);
+    generate_maze(height, width);
 
    
- 
+    RBTree<int> tree;
+    tree.insert(10);
+    tree.insert(20);
+    tree.insert(5);
+    tree.insert(4);
+    tree.insert(3);
+    tree.insert(12);
+    tree.insert(13);
+    tree.erase(12);
+
+    tree.erase(4);
+  
+    tree.print();
     return 0;
 }
 #endif

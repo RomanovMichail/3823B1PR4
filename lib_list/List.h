@@ -27,10 +27,10 @@ public:
     void replace(size_t pos, const T& value);
     bool hasCycle() const noexcept;
     bool reverse() noexcept;
-    TIterator begin() {
+    TIterator begin() const {
         return TIterator(_head);
     }
-    TIterator end() {
+    TIterator end() const {
         return TIterator(nullptr);
     }
  
@@ -78,6 +78,7 @@ public:
             bool operator==(const TIterator& iter) const noexcept {
                 return _pcur == iter._pcur;
             }
+            TNode<T>* get_node() const { return _pcur; }
         };
 };
     template <class T>
@@ -225,17 +226,19 @@ public:
         }
 
         TNode<T>* current = _head;
-        while (current->next() != node) {
+        while (current != nullptr && current->next() != node) {
             current = current->next();
         }
 
-        if (current->next() == node) {
-            current->next(node->next());
-            if (node == _tail) {
-                _tail = current;
-            }
-            delete node;
+        if (current == nullptr || current->next() != node) {
+            throw std::logic_error("Node not found in list");
         }
+
+        current->next(node->next());
+        if (node == _tail) {
+            _tail = current;
+        }
+        delete node;
     }
     template <class T>
     void TList<T>::erase(size_t pos) {
