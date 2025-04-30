@@ -8,13 +8,13 @@
 #include <gtest.h>
 
 
-TEST(UnsortedTableTest, DefaultConstructor) {
+TEST(UnstableTest, DefaultConstructor) {
     Unsorted_Table<int, std::string> table;
     EXPECT_EQ(table.size(), 0);
     EXPECT_TRUE(table.empty());
 }
 
-TEST(UnsortedTableTest, InsertValue) {
+TEST(UnstableTest, InsertValue) {
     Unsorted_Table<int, std::string> table;
     int key1 = table.insert("value1");
     int key2 = table.insert("value2");
@@ -26,7 +26,7 @@ TEST(UnsortedTableTest, InsertValue) {
     EXPECT_EQ(table.find(key2), "value2");
 }
 
-TEST(UnsortedTableTest, InsertKeyValue) {
+TEST(UnstableTest, InsertKeyValue) {
     Unsorted_Table<int, std::string> table;
     table.insert(1, "value1");
     table.insert(2, "value2");
@@ -37,7 +37,7 @@ TEST(UnsortedTableTest, InsertKeyValue) {
     EXPECT_EQ(table.find(2), "value2");
 }
 
-TEST(UnsortedTableTest, FindAndSearch) {
+TEST(UnstableTest, FindAndSearch) {
     Unsorted_Table<int, std::string> table;
     table.insert(1, "value1");
     table.insert(2, "value2");
@@ -49,7 +49,7 @@ TEST(UnsortedTableTest, FindAndSearch) {
     EXPECT_FALSE(table.search(3));
 }
 
-TEST(UnsortedTableTest, Erase) {
+TEST(UnstableTest, Erase) {
     Unsorted_Table<int, std::string> table;
     table.insert(1, "value1");
     table.insert(2, "value2");
@@ -65,7 +65,7 @@ TEST(UnsortedTableTest, Erase) {
     EXPECT_TRUE(table.empty());
 }
 
-TEST(UnsortedTableTest, CopyConstructor) {
+TEST(UnstableTest, CopyConstructor) {
     Unsorted_Table<int, std::string> table1;
     table1.insert(1, "value1");
     table1.insert(2, "value2");
@@ -81,7 +81,7 @@ TEST(UnsortedTableTest, CopyConstructor) {
 }
 
 
-TEST(UnsortedTableTest, SelfAssignment) {
+TEST(UnstableTest, SelfAssignment) {
     Unsorted_Table<int, std::string> table;
     table.insert(1, "value1");
     table.insert(2, "value2");

@@ -358,7 +358,11 @@ TDMassive<T>& TDMassive<T>::remove_by_index(size_t pos) {
     if (pos >= _size) {
         throw std::out_of_range("Index out of range");
     }
-    _states[pos] = State::deleted;
+
+    for (size_t i = pos; i < _size - 1; ++i) {
+        _data[i] = std::move(_data[i + 1]); 
+    }
+    _size--; 
     return *this;
 }
 

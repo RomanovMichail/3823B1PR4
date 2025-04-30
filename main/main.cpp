@@ -336,12 +336,28 @@ void generate_maze(size_t height, size_t width) {
     std::cout << "\nGenerated maze:" << std::endl;
     print_maze(height, width, right_walls, down_walls);
 }
+
+//Дерево выражений. Подаём выражение и переводим его в дерево и считаем.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 int main() {
 
     size_t height = 5;
     size_t width = 5;
 
-   /* generate_maze(height, width);*/
+    generate_maze(height, width);
 
    
     RBTree<int> tree;

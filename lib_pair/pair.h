@@ -4,27 +4,28 @@
 #include <iostream>
 #include <string>
 #include <stdexcept>
-
 template <class T1, class T2> class TPair;
-
-
 
 template <class T1, class T2>
 class TPair {
     T1 _first;
     T2 _second;
 public:
-    TPair() : _first(), _second() { }
-    TPair(const T1& first, const T2& second) : _first(first), _second(second) { }
-    TPair(const TPair& pair) : _first(pair._first), _second(pair._second) { }
-    ~TPair() { }
+    TPair() : _first(), _second() {}
+    TPair(const T1& first, const T2& second) : _first(first), _second(second) {}
+    TPair(const TPair& pair) : _first(pair._first), _second(pair._second) {}
+    ~TPair() {}
 
     TPair& make_pair(const T1& first, const T2& second) noexcept;
 
-    inline T1 first() const noexcept;
-    inline T2 second() const noexcept;
-    inline void set_first(const T1& value) noexcept;
-    inline void set_second(const T2& value) noexcept;
+    // Возвращаем ссылки вместо копий
+    inline T1& first() noexcept { return _first; }                   // Неконстантная версия
+    inline const T1& first() const noexcept { return _first; }       // Константная версия
+    inline T2& second() noexcept { return _second; }                // Неконстантная версия
+    inline const T2& second() const noexcept { return _second; }    // Константная версия
+
+    void set_first(const T1& value) noexcept { _first = value; }     // Можно удалить, если не нужны
+    void set_second(const T2& value) noexcept { _second = value; }   // Можно удалить, если не нужны
 
     TPair& operator=(const TPair& pair) noexcept;
     bool operator==(const TPair& pair) const noexcept;
@@ -33,8 +34,6 @@ public:
     bool operator<=(const TPair& pair) const noexcept;
 
     void swap(TPair& pair) noexcept;
-
-
 };
 
 template <class T1, class T2>
@@ -44,25 +43,6 @@ TPair<T1, T2>& TPair<T1, T2>::make_pair(const T1& first, const T2& second) noexc
     return *this;
 }
 
-template <class T1, class T2>
-inline T1 TPair<T1, T2>::first() const noexcept {
-    return _first;
-}
-
-template <class T1, class T2>
-inline T2 TPair<T1, T2>::second() const noexcept {
-    return _second;
-}
-
-template <class T1, class T2>
-inline void TPair<T1, T2>::set_first(const T1& value) noexcept {
-    _first = value;
-}
-
-template <class T1, class T2>
-inline void TPair<T1, T2>::set_second(const T2& value) noexcept {
-    _second = value;
-}
 
 template <class T1, class T2>
 TPair<T1, T2>& TPair<T1, T2>::operator=(const TPair<T1, T2>& pair) noexcept {
@@ -72,8 +52,6 @@ TPair<T1, T2>& TPair<T1, T2>::operator=(const TPair<T1, T2>& pair) noexcept {
     }
     return *this;
 }
-
-
 
 template <class T1, class T2>
 bool TPair<T1, T2>::operator==(const TPair<T1, T2>& pair) const noexcept {
